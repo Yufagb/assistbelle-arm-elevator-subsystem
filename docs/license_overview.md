@@ -1,12 +1,18 @@
 # License overview
 
-This repository currently uses Apache-2.0 as the main repository license through the top-level `LICENSE` file.
+This repository currently uses **Apache-2.0** as the main repository license through the top-level [`LICENSE`](../LICENSE) file.
+
+## Index
+
+- [Current license status](#current-license-status)
+- [Citation](#citation)
+- [Future refinement](#future-refinement)
 
 ## Current license status
 
 | Asset type | Current status | Notes |
 |---|---|---|
-| ROS 2 software | Apache-2.0 | `can_comm_pkg` already declares Apache-2.0 in its package metadata. |
+| ROS 2 software | Apache-2.0 | `can_comm_pkg` declares Apache-2.0 in its package metadata. |
 | ESP32 firmware | Apache-2.0 | Covered by the top-level repository license. |
 | Documentation | Apache-2.0 for now | Can later be moved to CC-BY-4.0 if required by the publication venue. |
 | Media and validation files | Apache-2.0 for now | If external videos are used, their storage and reuse conditions must be documented. |
@@ -14,10 +20,12 @@ This repository currently uses Apache-2.0 as the main repository license through
 
 ## Citation
 
-Citation metadata is available in the top-level file:
+Citation metadata is available in the top-level file [`CITATION.cff`](../CITATION.cff).
+
+The `repository-code` field points to the public repository:
 
 ```text
-CITATION.cff
+https://github.com/Yufagb/assistbelle-arm-elevator-subsystem
 ```
 
 ## Future refinement
@@ -28,4 +36,4 @@ Before final publication, decide whether to keep a single license for simplicity
 - hardware design files: CERN-OHL-S-2.0;
 - documentation and media: CC-BY-4.0.
 
-For the current preparation branch, Apache-2.0 is the active repository license.
+For the current public preparation repository, Apache-2.0 is the active repository license.
