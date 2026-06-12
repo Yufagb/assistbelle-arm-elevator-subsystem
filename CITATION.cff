@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+title: "Assistbelle: CAN-based 5-DOF assistive robotic manipulator"
+message: "If you use this repository, please cite it using the metadata in this file."
+type: software
+authors:
+  - family-names: Vilela Obando
+    given-names: Yuri Fabian
+  - family-names: Vergani
+    given-names: Luciano
+repository-code: "https://github.com/Yufagb/robot-project"
+license: Apache-2.0
+version: "0.1.0"
+date-released: "2026-06-11"
+keywords:
+  - robotics
+  - ROS 2
+  - CAN bus
+  - ESP32
+  - assistive robot
+  - medical supply handling
+abstract: "Open-source repository for a CAN-based assistive robotic manipulator integrating ROS 2, ESP32 firmware, electronics documentation, and validation material."

@@ -1,0 +1,3 @@
+test_id,profile,axis,target_displacement_mm,repetitions,evidence_file,command_source,observed_result,status,notes
+VAL-005,ramp,J5,100,5,validation/media/j5_ramp_100mm_5reps.mp4,ROS2_CAN,Elevator motion evidence identified,pending_media_copy,Video source exists in resultados and should be copied or externally linked
+VAL-006,trapezoidal,J5,100,5,validation/media/j5_trapezoidal_100mm_5reps.mp4,ROS2_CAN,Elevator motion evidence identified,pending_media_copy,Recommended operational profile for smoother motion comparison

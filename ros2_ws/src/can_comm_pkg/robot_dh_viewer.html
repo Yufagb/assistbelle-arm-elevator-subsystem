@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Simulador DH - Robot Project</title>
+    <style>
+        body { margin: 0; overflow: hidden; font-family: 'Segoe UI', sans-serif; background-color: #1a1a1a; color: white; }
+        #canvas-container { width: 100vw; height: 100vh; display: block; }
+        
+        /* Panel de Control */
+        #controls {
+            position: absolute; top: 10px; left: 10px;
+            background: rgba(0, 0, 0, 0.85);
+            padding: 15px; border-radius: 8px;
+            max-height: 90vh; overflow-y: auto;
+            width: 360px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.6);
+            backdrop-filter: blur(5px);
+            scrollbar-width: thin;
+            scrollbar-color: #4facfe #333;
+        }
+
+        /* Estilos de scrollbar para Chrome/Safari */
+        #controls::-webkit-scrollbar { width: 8px; }
+        #controls::-webkit-scrollbar-track { background: #222; }
+        #controls::-webkit-scrollbar-thumb { background-color: #4facfe; border-radius: 4px; }
+        
+        h2 { margin-top: 0; font-size: 20px; color: #4facfe; border-bottom: 2px solid #555; padding-bottom: 8px; text-align: center;}
+        
+        .joint-group { border: 1px solid #444; padding: 12px; margin-bottom: 12px; border-radius: 6px; background: #2a2a2a; }
+        .joint-title { font-weight: bold; color: #ffa502; margin-bottom: 8px; display: block; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;}
+        
+        label { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px; align-items: center; color: #ddd; }
+        input[type="number"] { width: 60px; background: #444; border: 1px solid #666; color: white; padding: 4px; text-align: right; border-radius: 3px; }
+        input[type="range"] { flex-grow: 1; margin: 0 10px; cursor: pointer; }
+        input[type="checkbox"] { cursor: pointer; transform: scale(1.2); }
+        
+        .val-display { width: 50px; text-align: right; font-family: monospace; color: #00f260; font-weight: bold;}
+        
+        .btn-group { display: flex; gap: 10px; margin-top: 15px; }
+        button { flex: 1; padding: 10px; border: none; color: white; cursor: pointer; border-radius: 4px; font-weight: bold; transition: all 0.2s; font-size: 13px; }
+        .btn-reset { background: #555; }
+        .btn-reset:hover { background: #777; }
+        .btn-save { background: #4facfe; }
+        .btn-save:hover { background: #00f260; color: #000; box-shadow: 0 0 10px #00f260; }
+
+        .info { font-size: 12px; color: #aaa; margin-top: 15px; font-style: italic; border-top: 1px solid #444; padding-top: 10px;}
+        .axis-legend { margin-top:10px; font-size: 13px; font-weight: bold; text-align: center; background: #111; padding: 5px; border-radius: 4px;}
+        .red { color: #ff4d4d; } .green { color: #2ecc71; } .blue { color: #4facfe; }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://unpkg.com/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+</head>
+<body>
+
+    <div id="controls">
+        <h2>🤖 Configuración DH</h2>
+        
+        <div class="axis-legend">
+            Ejes: <span class="red">X (Rojo)</span>, <span class="green">Y (Verde)</span>, <span class="blue">Z (Azul)</span>
+        </div>
+
+        <div id="inputs-container">
+            </div>
+
+        <div class="btn-group">
+            <button class="btn-reset" onclick="resetCamera()">Recentrar Vista</button>
+            <button class="btn-save" onclick="downloadConfig()">💾 Guardar Configuración</button>
+        </div>
+
+        <div class="info">
+            • <b>d:</b> Desplazamiento en Z<br>
+            • <b>a:</b> Longitud del eslabón en X<br>
+            • <b>α (alpha):</b> Rotación en X<br>
+            • <b>Offset:</b> Ajuste inicial
+        </div>
+    </div>
+
+    <div id="canvas-container"></div>
+
+<script>
+    // --- 1. CONFIGURACIÓN DEL ROBOT ---
+    // Parámetros extraídos de ik.py
+    const defaultParams = [
+        { type: 'P', value: 0, d: 0.80, a: 0, alpha: 0, invert: false, offset: 0, name: "Ascensor (Z)" },
+        { type: 'R', value: 0, d: 0.065, a: 0.025, alpha: -90, invert: false, offset: 180, name: "Base (J1)" },
+        { type: 'R', value: 0, d: 0.10, a: 0.0, alpha: 0, invert: false, offset: 0, name: "Link Fijo" },
+        { type: 'R', value: 0, d: 0.0, a: 0.215, alpha: 0, invert: false, offset: 180, name: "Hombro (J2)" },
+        { type: 'R', value: 0, d: 0.0, a: 0.250, alpha: 180, invert: false, offset: 0, name: "Codo (J3)" },
+        { type: 'R', value: 0, d: 0.0, a: 0.125, alpha: 0, invert: true, offset: 0, name: "Muñeca (J4)" }
+    ];
+
+    let robotParams = JSON.parse(JSON.stringify(defaultParams));
+    let scene, camera, renderer, controls;
+    let robotFrames = []; 
+    let linkLines = [];   
+
+    // --- 2. INICIALIZACIÓN DE LA ESCENA 3D ---
+    function init() {
+        const container = document.getElementById('canvas-container');
+        
+        scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x1a1a1a);
+        
+        // Suelo de rejilla
+        const gridHelper = new THREE.GridHelper(5, 20, 0x444444, 0x222222);
+        gridHelper.rotation.x = Math.PI / 2;
+        scene.add(gridHelper);
+
+        camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(2, 2, 2);
+        camera.up.set(0, 0, 1); 
+
+        renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        container.appendChild(renderer.domElement);
+
+        controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+        controls.target.set(0, 0, 0.5);
+
+        // Iluminación
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        scene.add(ambientLight);
+        const dirLight = new THREE.DirectionalLight(0xffffff, 1);
+        dirLight.position.set(5, 10, 7);
+        scene.add(dirLight);
+
+        createUI();
+        updateRobot();
+        animate();
+    }
+
+    // --- 3. CÁLCULO DE CINEMÁTICA DH ---
+    function updateRobot() {
+        // Limpiar
+        robotFrames.forEach(obj => scene.remove(obj));
+        linkLines.forEach(line => scene.remove(line));
+        robotFrames = [];
+        linkLines = [];
+
+        let currentMatrix = new THREE.Matrix4(); 
+        
+        // Origen
+        drawFrame(currentMatrix, 0.2); 
+        let prevPos = new THREE.Vector3().setFromMatrixPosition(currentMatrix);
+
+        for (let i = 0; i < robotParams.length; i++) {
+            const p = robotParams[i];
+            
+            let thetaVal = 0;
+            let dVal = p.d;
+
+            if (p.type === 'P') {
+                dVal += p.value; // Prismatic: value adds to d
+            } else {
+                thetaVal = p.value; // Revolute: value is theta
+            }
+
+            // Cálculos de ángulos en radianes
+            let thetaRad = (thetaVal * (Math.PI / 180));
+            if (p.invert) thetaRad *= -1;
+            let offsetRad = p.offset * (Math.PI / 180);
+            let totalTheta = thetaRad + offsetRad;
+            let alphaRad = p.alpha * (Math.PI / 180);
+
+            // Matrices de transformación DH
+            let mTheta = new THREE.Matrix4().makeRotationZ(totalTheta);
+            let mD = new THREE.Matrix4().makeTranslation(0, 0, dVal);
+            let mA = new THREE.Matrix4().makeTranslation(p.a, 0, 0);
+            let mAlpha = new THREE.Matrix4().makeRotationX(alphaRad);
+
+            // Multiplicación T = RotZ * TransZ * TransX * RotX
+            let localTransform = new THREE.Matrix4();
+            localTransform.multiply(mTheta).multiply(mD).multiply(mA).multiply(mAlpha);
+
+            currentMatrix.multiply(localTransform);
+
+            // Dibujar
+            drawFrame(currentMatrix, 0.15); // Ejes
+            
+            let currentPos = new THREE.Vector3().setFromMatrixPosition(currentMatrix);
+            drawLink(prevPos, currentPos); // Eslabón
+            
+            // Dibujar cilindro visual para la articulación
+            drawJointMesh(prevPos, currentMatrix, p.invert, p.type);
+
+            prevPos = currentPos.clone();
+        }
+        drawGripper(currentMatrix);
+    }
+
+    // --- 4. DIBUJADO VISUAL ---
+    function drawFrame(matrix, size) {
+        const axes = new THREE.AxesHelper(size);
+        axes.matrixAutoUpdate = false;
+        axes.matrix.copy(matrix);
+        axes.renderOrder = 1; 
+        scene.add(axes);
+        robotFrames.push(axes);
+    }
+
+    function drawLink(v1, v2) {
+        const dist = v1.distanceTo(v2);
+        if(dist < 0.001) return; 
+
+        const material = new THREE.MeshPhongMaterial({ color: 0xcccccc });
+        const geometry = new THREE.CylinderGeometry(0.01, 0.01, dist, 8);
+        geometry.translate(0, dist / 2, 0);
+        geometry.rotateX(Math.PI / 2);
+        
+        const linkMesh = new THREE.Mesh(geometry, material);
+        linkMesh.position.copy(v1);
+        linkMesh.lookAt(v2);
+        
+        scene.add(linkMesh);
+        robotFrames.push(linkMesh);
+    }
+
+    function drawJointMesh(pos, matrix, inverted, type) {
+        const geometry = new THREE.CylinderGeometry(0.04, 0.04, 0.06, 16);
+        const color = type === 'P' ? 0x9b59b6 : (inverted ? 0xff4d4d : 0xffa502);
+        const material = new THREE.MeshPhongMaterial({ color: color });
+        
+        // Esferas para las uniones
+        const sphereGeo = new THREE.SphereGeometry(0.03, 16, 16);
+        const sphere = new THREE.Mesh(sphereGeo, material);
+        sphere.position.copy(pos);
+        scene.add(sphere);
+        robotFrames.push(sphere);
+    }
+
+    function drawGripper(matrix) {
+        const group = new THREE.Group();
+        const mat = new THREE.MeshPhongMaterial({ color: 0x00ff00 });
+        
+        // Base garra
+        const base = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.1, 0.02), mat);
+        // Dedos
+        const f1 = new THREE.Mesh(new THREE.BoxGeometry(0.02, 0.08, 0.01), mat);
+        f1.position.set(0.03, 0.05, 0.02);
+        const f2 = new THREE.Mesh(new THREE.BoxGeometry(0.02, 0.08, 0.01), mat);
+        f2.position.set(0.03, -0.05, 0.02);
+
+        group.add(base, f1, f2);
+        group.applyMatrix4(matrix);
+        
+        scene.add(group);
+        robotFrames.push(group);
+    }
+
+    // --- 5. INTERFAZ Y EVENTOS ---
+    function createUI() {
+        const container = document.getElementById('inputs-container');
+        container.innerHTML = '';
+
+        robotParams.forEach((p, index) => {
+            const div = document.createElement('div');
+            div.className = 'joint-group';
+            
+            let controlHTML = '';
+            if (p.type === 'P') {
+                controlHTML = `
+                    <label>
+                        <span>Desplazamiento (m) <span id="val-var-${index}" class="val-display">${p.value.toFixed(2)}</span></span>
+                        <input type="range" min="0" max="1.0" step="0.01" value="${p.value}" oninput="updateParam(${index}, 'value', this.value)">
+                    </label>
+                `;
+            } else {
+                controlHTML = `
+                    <label>
+                        <span>Giro (θ) <span id="val-var-${index}" class="val-display">${p.value}°</span></span>
+                        <input type="range" min="-180" max="180" value="${p.value}" oninput="updateParam(${index}, 'value', this.value)">
+                    </label>
+                `;
+            }
+
+            div.innerHTML = `
+                <span class="joint-title">${p.name || ('Articulación ' + (index + 1))} (${p.type})</span>
+                ${controlHTML}
+                <label>Invertir <input type="checkbox" ${p.invert ? 'checked' : ''} onchange="updateParam(${index}, 'invert', this.checked)"></label>
+                <div style="margin-top:10px; border-top:1px solid #444; padding-top:8px;">
+                    <label>d (Z): <input type="number" step="0.01" value="${p.d}" onchange="updateParam(${index}, 'd', this.value)"></label>
+                    <label>a (X): <input type="number" step="0.01" value="${p.a}" onchange="updateParam(${index}, 'a', this.value)"></label>
+                    <label>α (X°): <input type="number" step="90" value="${p.alpha}" onchange="updateParam(${index}, 'alpha', this.value)"></label>
+                    <label>Offset: <input type="number" step="1" value="${p.offset}" onchange="updateParam(${index}, 'offset', this.value)"></label>
+                </div>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    function updateParam(index, key, value) {
+        if (key === 'invert') {
+            robotParams[index][key] = value;
+        } else {
+            robotParams[index][key] = parseFloat(value);
+            if(key === 'value') {
+                const displayVal = robotParams[index].type === 'P' ? parseFloat(value).toFixed(2) : value + '°';
+                document.getElementById(`val-var-${index}`).innerText = displayVal;
+            }
+        }
+        updateRobot();
+    }
+
+    function resetCamera() {
+        camera.position.set(2, 2, 2);
+        camera.lookAt(0,0,0.5);
+        controls.reset();
+    }
+
+    function downloadConfig() {
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(robotParams, null, 2));
+        const downloadAnchorNode = document.createElement('a');
+        downloadAnchorNode.setAttribute("href", dataStr);
+        downloadAnchorNode.setAttribute("download", "configuracion_robot.json");
+        document.body.appendChild(downloadAnchorNode); 
+        downloadAnchorNode.click();
+        downloadAnchorNode.remove();
+    }
+
+    function animate() {
+        requestAnimationFrame(animate);
+        controls.update();
+        renderer.render(scene, camera);
+    }
+    
+    window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    init();
+</script>
+</body>
+</html>

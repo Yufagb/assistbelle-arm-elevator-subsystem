@@ -1,0 +1,5 @@
+python-can
+numpy
+matplotlib
+opencv-python
+pyzbar

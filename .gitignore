@@ -1,0 +1,58 @@
+# ROS 2 / colcon generated artifacts
+ros2_ws/build/
+ros2_ws/install/
+ros2_ws/log/
+**/build/
+**/install/
+**/log/
+**/.colcon/
+
+# Python
+**/__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.venv/
+venv/
+
+# ESP-IDF / Arduino / PlatformIO firmware artifacts
+.pio/
+**/.pio/
+firmware/**/build/
+firmware/**/managed_components/
+firmware/**/dependencies.lock
+firmware/**/sdkconfig.old
+firmware/**/*.bin
+firmware/**/*.elf
+firmware/**/*.map
+firmware/**/*.uf2
+firmware/**/*.hex
+firmware/**/*.lst
+firmware/**/.clangd
+sdkconfig.old
+*.map
+*.bin
+*.elf
+*.uf2
+*.hex
+
+# External ESP-IDF installations must not be versioned
+ESP_IDF_CONTAINER/
+ESP_IDF_TOOLS/
+esp-idf/
+.espressif/
+
+# IDE / editor local state
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Environment and local logs
+.env*
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db

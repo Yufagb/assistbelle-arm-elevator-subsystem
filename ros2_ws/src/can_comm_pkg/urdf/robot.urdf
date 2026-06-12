@@ -1,0 +1,225 @@
+<?xml version="1.0"?>
+<robot name="custom_robot">
+
+  <!-- Materials -->
+  <material name="blue">
+    <color rgba="0 0 0.8 1"/>
+  </material>
+  <material name="green">
+    <color rgba="0 0.8 0 1"/>
+  </material>
+  <material name="red">
+    <color rgba="0.8 0 0 1"/>
+  </material>
+  <material name="white">
+    <color rgba="1 1 1 1"/>
+  </material>
+  <material name="grey">
+    <color rgba="0.5 0.5 0.5 1"/>
+  </material>
+
+  <!-- Base Link -->
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <box size="0.2 0.2 0.05"/>
+      </geometry>
+      <material name="grey"/>
+    </visual>
+  </link>
+
+  <!-- J5: Prismatic (Elevator) -->
+  <!-- d0_eff = d0 + 0.80. We place the joint at 0.80 offset? 
+       Actually, usually the joint origin is the zero position.
+       If d0=0, we want the link to be at 0.80.
+       So let's put the joint origin at 0 0 0.80 relative to base?
+       Or put it at 0 and have the link offset?
+       Let's put joint at 0,0,0 and use d0 as the variable.
+       But the DH says d0_eff = d0 + 0.80.
+       So the transform is Trans_z(d0 + 0.80).
+       This is Trans_z(0.80) * Trans_z(d0).
+       So we can have a fixed joint for the 0.80 offset, then the prismatic.
+  -->
+  
+  <joint name="joint_base_offset" type="fixed">
+    <parent link="base_link"/>
+    <child link="elevator_base"/>
+    <origin xyz="0 0 0.80" rpy="0 0 0"/>
+  </joint>
+
+  <link name="elevator_base">
+     <visual>
+      <geometry>
+        <cylinder length="1.6" radius="0.02"/>
+      </geometry>
+      <origin xyz="0 0 -0.8" rpy="0 0 0"/> <!-- Visual representation of the rail -->
+      <material name="grey"/>
+    </visual>
+  </link>
+
+  <joint name="J5" type="prismatic">
+    <parent link="elevator_base"/>
+    <child link="link_elevator"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-0.5" upper="0.5" effort="100" velocity="1.0"/> <!-- Adjust limits as needed -->
+  </joint>
+
+  <link name="link_elevator">
+    <visual>
+      <geometry>
+        <box size="0.1 0.1 0.1"/>
+      </geometry>
+      <material name="blue"/>
+    </visual>
+  </link>
+
+  <!-- J1: Revolute -->
+  <!-- DH: d=0.065, a=0.025, alpha=-90. Theta = th1 + pi -->
+  <!-- Origin relative to previous frame (elevator) is just 0 0 0 because we are at the end of the prismatic. -->
+  <!-- But we have the +pi offset. -->
+  
+  <joint name="J1" type="revolute">
+    <parent link="link_elevator"/>
+    <child link="link_1_pre"/>
+    <origin xyz="0 0 0" rpy="0 0 3.14159"/> <!-- Offset pi -->
+    <axis xyz="0 0 1"/>
+    <limit lower="-3.14" upper="3.14" effort="100" velocity="1.0"/>
+  </joint>
+
+  <link name="link_1_pre">
+      <!-- Dummy link for the transform -->
+  </link>
+
+  <!-- Transform to next joint (Fixed) -->
+  <!-- DH Row 1 Params: d=0.065, a=0.025, alpha=-90 -->
+  <!-- This defines the position of the NEXT frame relative to J1 -->
+  
+  <joint name="joint_1_trans" type="fixed">
+    <parent link="link_1_pre"/>
+    <child link="link_1"/>
+    <origin xyz="0.025 0 0.065" rpy="-1.5708 0 0"/>
+  </joint>
+
+  <link name="link_1">
+    <visual>
+      <geometry>
+        <cylinder length="0.1" radius="0.03"/>
+      </geometry>
+      <material name="green"/>
+    </visual>
+  </link>
+
+  <!-- Fixed Joint (Dummy Row 2) -->
+  <!-- DH Row 2 Params: d=0.10, a=0.0, alpha=0. Theta=0 -->
+  
+  <joint name="joint_dummy" type="fixed">
+    <parent link="link_1"/>
+    <child link="link_dummy"/>
+    <origin xyz="0 0 0.10" rpy="0 0 0"/>
+  </joint>
+
+  <link name="link_dummy">
+      <!-- Just a connector -->
+  </link>
+
+  <!-- J2: Revolute -->
+  <!-- DH Row 3 Params: d=0.0, a=0.215, alpha=0. Theta = th2 + pi -->
+  
+  <joint name="J2" type="revolute">
+    <parent link="link_dummy"/>
+    <child link="link_2_pre"/>
+    <origin xyz="0 0 0" rpy="0 0 3.14159"/> <!-- Offset pi -->
+    <axis xyz="0 0 1"/>
+    <limit lower="-3.14" upper="3.14" effort="100" velocity="1.0"/>
+  </joint>
+
+  <link name="link_2_pre">
+  </link>
+
+  <!-- Transform to next joint -->
+  <!-- DH Row 3 Params: d=0.0, a=0.215, alpha=0 -->
+  
+  <joint name="joint_2_trans" type="fixed">
+    <parent link="link_2_pre"/>
+    <child link="link_2"/>
+    <origin xyz="0.215 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <link name="link_2">
+    <visual>
+      <geometry>
+        <box size="0.215 0.05 0.05"/>
+      </geometry>
+      <origin xyz="-0.1075 0 0" rpy="0 0 0"/> <!-- Center the visual -->
+      <material name="red"/>
+    </visual>
+  </link>
+
+  <!-- J3: Revolute -->
+  <!-- DH Row 4 Params: d=0.0, a=0.250, alpha=180. Theta = th3 -->
+  
+  <joint name="J3" type="revolute">
+    <parent link="link_2"/>
+    <child link="link_3_pre"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-3.14" upper="3.14" effort="100" velocity="1.0"/>
+  </joint>
+
+  <link name="link_3_pre">
+  </link>
+
+  <!-- Transform to next joint -->
+  <!-- DH Row 4 Params: d=0.0, a=0.250, alpha=180 -->
+  
+  <joint name="joint_3_trans" type="fixed">
+    <parent link="link_3_pre"/>
+    <child link="link_3"/>
+    <origin xyz="0.250 0 0" rpy="3.14159 0 0"/>
+  </joint>
+
+  <link name="link_3">
+    <visual>
+      <geometry>
+        <box size="0.250 0.04 0.04"/>
+      </geometry>
+      <origin xyz="-0.125 0 0" rpy="0 0 0"/>
+      <material name="white"/>
+    </visual>
+  </link>
+
+  <!-- J4: Revolute -->
+  <!-- DH Row 5 Params: d=0.0, a=0.125, alpha=0. Theta = -th4 -->
+  <!-- Note: Axis is 0 0 -1 because of -th4 -->
+  
+  <joint name="J4" type="revolute">
+    <parent link="link_3"/>
+    <child link="link_4_pre"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <axis xyz="0 0 -1"/>
+    <limit lower="-3.14" upper="3.14" effort="100" velocity="1.0"/>
+  </joint>
+
+  <link name="link_4_pre">
+  </link>
+
+  <!-- Transform to End Effector -->
+  <!-- DH Row 5 Params: d=0.0, a=0.125, alpha=0 -->
+  
+  <joint name="joint_ee_trans" type="fixed">
+    <parent link="link_4_pre"/>
+    <child link="link_ee"/>
+    <origin xyz="0.125 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <link name="link_ee">
+    <visual>
+      <geometry>
+        <sphere radius="0.03"/>
+      </geometry>
+      <material name="blue"/>
+    </visual>
+  </link>
+
+</robot>
