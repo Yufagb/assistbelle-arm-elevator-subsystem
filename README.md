@@ -9,6 +9,7 @@ El sistema integra **ROS 2**, **bus CAN / SocketCAN**, **ESP32 + ESP-IDF**, nodo
 ## Índice rápido
 
 - [Descripción del sistema](#descripción-del-sistema)
+- [Quick start](#quick-start)
 - [Estado actual](#estado-actual)
 - [Estructura del repositorio](#estructura-del-repositorio)
 - [Documentación principal](#documentación-principal)
@@ -33,6 +34,32 @@ Assistbelle es un subsistema de brazo y elevador para un robot asistivo. El paqu
 | Control distribuido | Nodos ESP32 con ESP-IDF por articulación. |
 | Comunicación | Bus CAN mediante SocketCAN. |
 | Documentación | README, manuales, pinouts, BOM, validación y checklist HardwareX. |
+
+## Quick start
+
+Este flujo permite verificar rápidamente el paquete ROS 2 y el nodo CAN usando una interfaz CAN virtual (`vcan`).
+
+```bash
+git clone https://github.com/Yufagb/assistbelle-arm-elevator-subsystem.git
+cd assistbelle-arm-elevator-subsystem/ros2_ws
+source /opt/ros/jazzy/setup.bash
+pip install -r ../requirements.txt
+rm -rf build install log
+colcon build --packages-select can_comm_pkg
+source install/setup.bash
+sudo modprobe vcan
+sudo ip link add dev can0 type vcan 2>/dev/null || true
+sudo ip link set up can0
+ros2 run can_comm_pkg can_node
+```
+
+Salida esperada del nodo CAN:
+
+```text
+CANNode iniciado y suscrito a /can_command
+```
+
+Para firmware ESP32, usar la guía específica: [`firmware/ESP_IDF_BUILD_GUIDE.md`](firmware/ESP_IDF_BUILD_GUIDE.md).
 
 ## Estado actual
 
