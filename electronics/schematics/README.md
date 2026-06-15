@@ -1,50 +1,70 @@
-# Esquemáticos eléctricos
+<!-- SPDX-License-Identifier: CERN-OHL-S-2.0 -->
 
-Esta carpeta contiene los esquemáticos eléctricos del subsistema de brazo y elevador de Assistbelle.
+# Electrical schematics
 
-## Índice
+This folder contains the electrical schematic PDFs for the Assistbelle robotic arm and elevator subsystem.
 
-- [Archivos disponibles](schematics_index.md)
-- [Criterios mínimos](#criterios-mínimos)
-- [Revisión recomendada](#revisión-recomendada)
-- [Documentos relacionados](#documentos-relacionados)
+The schematics document the main power/CAN bus, Raspberry Pi to MCP2515 interface, ESP32-based DC motor controller nodes, IBT-2-based DC motor controller nodes and the J5 stepper/elevator controller.
 
-## Archivos disponibles
+## Available schematic PDFs
 
-El índice principal vive en:
+| File | Subsystem | Main content | HardwareX status |
+|---|---|---|---|
+| `Main Bus.pdf` | Main power and CAN bus | 12V, P_GND, 5V, S_GND, CANH, CANL, subsystem branches and RT1/RT2 120-ohm CAN terminations. | Reviewed; physical implementation still pending. |
+| `RASPBERRYPI_MCP2515.pdf` | Raspberry Pi to MCP2515 interface | Raspberry Pi 40-pin header, MCP2515 10-pin header, SPI, interrupt, CAN connector and 5V power connector. | Reviewed; MCP2515 voltage must be verified physically. |
+| `DC_MOTOR_DRIVER_SCH.pdf` | DRV8871 DC motor controller | ESP32 NodeMCU, SN65HVD230DR, DRV8871DDA, CAN header, power headers and motor/encoder header. | Reviewed; intended for J1/J4 documentation, physical assignment pending. |
+| `DC_MOTOR_DRIVER_SCH_IBT2.pdf` | IBT-2 DC motor controller | ESP32 NodeMCU, SN65HVD230DR, IBT-2 interface, CAN header, power headers and motor/encoder header. | Reviewed; intended for J2/J3 documentation, physical assignment pending. |
+| `Stepper Driver v7.pdf` | J5 stepper/elevator controller | ESP32 NodeMCU, CAN transceiver, J_CAN, J_DRIVERS with ENA/DIR/PUL and J_5V. | Reviewed; physical assignment pending. |
 
-```text
-electronics/schematics/schematics_index.md
-```
+## Extracted design coverage
 
-Abrir aquí: [`schematics_index.md`](schematics_index.md).
+| Requirement | Covered by | Notes |
+|---|---|---|
+| 12 V actuator rail | `Main Bus.pdf`, motor-driver schematics | Main Bus separates 12V and P_GND. |
+| 5 V logic rail | `Main Bus.pdf`, `RASPBERRYPI_MCP2515.pdf`, motor-driver schematics, `Stepper Driver v7.pdf` | Must be checked against the actual LM2596S wiring. |
+| Separate power/signal grounds | `Main Bus.pdf` | Main Bus labels P_GND and S_GND separately. |
+| CANH/CANL bus | All five schematics | CAN connector or SN65HVD230DR shown in controller sheets. |
+| CAN termination | `Main Bus.pdf` | RT1 and RT2 are shown as 120-ohm terminations. |
+| Raspberry Pi + MCP2515 | `RASPBERRYPI_MCP2515.pdf` | Includes SPI and INT_CAN connections. |
+| DRV8871 DC motor node | `DC_MOTOR_DRIVER_SCH.pdf` | Includes DRV8871DDA and ILIM path. |
+| IBT-2 DC motor node | `DC_MOTOR_DRIVER_SCH_IBT2.pdf` | Includes IBT2_CONN, IBT_POWER_HEADER and IBT_MOTOR_HEADER. |
+| J5 stepper/elevator node | `Stepper Driver v7.pdf` | Includes PUL, DIR and ENA signals. |
 
-## Criterios mínimos
+## Files derived from this schematic review
 
-Para que un esquemático se considere listo para publicación, debe permitir identificar:
+The following repository documents use information extracted from these PDFs:
 
-- alimentación principal;
-- conversión o distribución de 12 V y 5 V;
-- tierra común entre lógica, drivers y bus;
-- conexión CANH/CANL;
-- nodo maestro Raspberry Pi + MCP2515;
-- nodos ESP32;
-- drivers DRV8871 para motores DC;
-- driver TB6600 para el eje J5/NEMA;
-- actuadores, gripper y señales auxiliares.
+- [`schematics_index.md`](schematics_index.md): indexed schematic summary and extracted connector/component information.
+- [`../wiring_diagrams/connector_table.md`](../wiring_diagrams/connector_table.md): connector table extracted from the schematic PDFs.
+- [`../wiring_diagrams/nodos_controladores.md`](../wiring_diagrams/nodos_controladores.md): node-to-driver assignment and physical verification checklist.
+- [`../power_distribution/power_summary.md`](../power_distribution/power_summary.md): power architecture summary.
 
-## Revisión recomendada
+## Physical verification still required
 
-Antes del envío final:
+Before final HardwareX submission, verify on the real robot:
 
-- exportar PDF o PNG de cada esquemático editable;
-- confirmar nombres de señales contra los pinouts;
-- confirmar corriente máxima de drivers y actuadores;
-- añadir terminaciones CAN de 120 ohmios si no están explícitas;
-- revisar conectores físicos y numeración de pines;
-- añadir fecha o versión del diagrama.
+- [ ] the exact location of RT1 and RT2 CAN termination resistors;
+- [ ] the MCP2515 module operating voltage, because the schematic shows 3V3 at the MCP header and a separate 5V/GND power connector;
+- [ ] the physical driver assignment: J1 DRV8871, J2 IBT-2, J3 IBT-2, J4 DRV8871 + servo, J5 TB6600;
+- [ ] connector models, pin order, wire colors and cable gauges;
+- [ ] the actual panic-button wiring path for actuator power cut-off;
+- [ ] final photos for [`../images/`](../images/).
 
-## Documentos relacionados
+## Export and naming recommendations
+
+For final publication, keep the current PDFs and optionally export PNG previews with these names:
+
+| Optional PNG export | Source PDF |
+|---|---|
+| `schematic_main_bus.png` | `Main Bus.pdf` |
+| `schematic_raspberrypi_mcp2515.png` | `RASPBERRYPI_MCP2515.pdf` |
+| `schematic_drv8871_node.png` | `DC_MOTOR_DRIVER_SCH.pdf` |
+| `schematic_ibt2_node.png` | `DC_MOTOR_DRIVER_SCH_IBT2.pdf` |
+| `schematic_stepper_j5_node.png` | `Stepper Driver v7.pdf` |
+
+If editable KiCad or EDA source files exist, keep them together with the PDF/PNG exports in this folder.
+
+## Related documents
 
 - [`../README.md`](../README.md)
 - [`schematics_index.md`](schematics_index.md)
@@ -52,4 +72,5 @@ Antes del envío final:
 - [`../pinout_tables/raspberry_pi_mcp2515.md`](../pinout_tables/raspberry_pi_mcp2515.md)
 - [`../wiring_diagrams/bus_principal.md`](../wiring_diagrams/bus_principal.md)
 - [`../wiring_diagrams/nodos_controladores.md`](../wiring_diagrams/nodos_controladores.md)
+- [`../wiring_diagrams/connector_table.md`](../wiring_diagrams/connector_table.md)
 - [`../power_distribution/power_summary.md`](../power_distribution/power_summary.md)
