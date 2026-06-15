@@ -1,14 +1,14 @@
 cff-version: 1.2.0
-title: "Assistbelle: CAN-based 5-DOF assistive robotic manipulator"
+title: "Assistbelle robotic arm and elevator subsystem"
 message: "If you use this repository, please cite it using the metadata in this file."
 type: software
 authors:
   - family-names: Vilela Obando
     given-names: Yuri Fabian
-  - family-names: Vergani
-    given-names: Luciano
+  - family-names: Vergani Api
+    given-names: Luciano Matteo
 repository-code: "https://github.com/Yufagb/assistbelle-arm-elevator-subsystem"
-license: Apache-2.0
+license: "Apache-2.0 AND CERN-OHL-S-2.0 AND CC-BY-4.0"
 version: "0.1.0"
 date-released: "2026-06-11"
 keywords:
@@ -18,4 +18,5 @@ keywords:
   - ESP32
   - assistive robot
   - medical supply handling
-abstract: "Open-source repository for a CAN-based assistive robotic manipulator integrating ROS 2, ESP32 firmware, electronics documentation, and validation material."
+  - open hardware
+abstract: "Open-source HardwareX publication package for the Assistbelle robotic arm and vertical elevator subsystem, including hardware documentation, ESP32 firmware, ROS 2 software, CAN communication, electronics documentation, BOM and validation material for controlled laboratory experiments."
