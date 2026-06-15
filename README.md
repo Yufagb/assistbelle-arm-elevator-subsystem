@@ -1,46 +1,44 @@
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
 
-# Assistbelle / Robot asistivo 5-DOF
+# Assistbelle robotic arm and elevator subsystem
 
-Repositorio público de preparación para publicación tipo **HardwareX** de un manipulador robótico asistivo de 5 grados de libertad, orientado a tareas de laboratorio para traslado y manipulación de implementos médicos en un entorno controlado.
+Open-source HardwareX publication package for the **robotic arm and vertical elevator subsystem** of Assistbelle, intended for controlled laboratory experiments on the manipulation and transport of medical supplies.
 
-El sistema integra **ROS 2**, **bus CAN / SocketCAN**, **ESP32 + ESP-IDF**, nodos distribuidos por articulación, drivers **DRV8871** para motores DC y **TB6600** para el eje prismático/elevador.
+This repository contains the hardware documentation, firmware, ROS 2 software, electronics documentation, validation material and publication support files needed to reproduce and evaluate the arm/elevator subsystem.
 
-> Este repositorio público usa `main` como rama principal. Fue generado a partir de la rama de preparación `hardwarex-publication-package` del repositorio histórico `robot-project`.
+## Authors
 
-## Índice rápido
+- Yuri Fabian Vilela Obando
+- Luciano Matteo Vergani Api
 
-- [Descripción del sistema](#descripción-del-sistema)
-- [Quick start](#quick-start)
-- [Estado actual](#estado-actual)
-- [Estructura del repositorio](#estructura-del-repositorio)
-- [Documentación principal](#documentación-principal)
-- [Firmware ESP32](#firmware-esp32)
-- [ROS 2](#ros-2)
-- [Electrónica](#electrónica)
-- [Hardware mecánico](#hardware-mecánico)
-- [Validación](#validación)
-- [Lista de materiales](#lista-de-materiales)
-- [License](#license)
-- [Checklist de cierre](#checklist-de-cierre)
-- [Enfoque recomendado del artículo](#enfoque-recomendado-del-artículo)
+## Scope
 
-## Descripción del sistema
+This repository covers:
 
-Assistbelle es un subsistema de brazo y elevador para un robot asistivo. El paquete documenta el diseño reproducible del manipulador, la electrónica de control, el firmware distribuido y la capa ROS 2 usada para enviar comandos por CAN.
+- robotic arm subsystem;
+- vertical elevator / prismatic axis;
+- ESP32 firmware for distributed joint control;
+- CAN / SocketCAN communication;
+- ROS 2 control and validation utilities;
+- electronics documentation, pinouts, power distribution and schematics;
+- bill of materials (BOM);
+- validation documentation and curated evidence structure;
+- documentation and paper-support material for HardwareX.
 
-| Módulo | Descripción |
-|---|---|
-| Manipulador | Brazo robótico con articulaciones rotativas y gripper. |
-| Elevador | Eje prismático J5 accionado con motor NEMA y driver TB6600. |
-| Control principal | ROS 2 sobre computador principal o Raspberry Pi. |
-| Control distribuido | Nodos ESP32 con ESP-IDF por articulación. |
-| Comunicación | Bus CAN mediante SocketCAN. |
-| Documentación | README, manuales, pinouts, BOM, validación y checklist HardwareX. |
+## Out of scope
+
+The current public package does **not** cover:
+
+- autonomous navigation;
+- the complete mobile base;
+- the storage module;
+- real clinical validation or certified medical-device use.
+
+The system must be interpreted as a **laboratory prototype** for controlled validation, not as a clinically approved device.
 
 ## Quick start
 
-Este flujo permite verificar rápidamente el paquete ROS 2 y el nodo CAN usando una interfaz CAN virtual (`vcan`).
+This flow verifies the ROS 2 package and the CAN bridge using a virtual CAN interface (`vcan`).
 
 ```bash
 git clone https://github.com/Yufagb/assistbelle-arm-elevator-subsystem.git
@@ -56,40 +54,20 @@ sudo ip link set up can0
 ros2 run can_comm_pkg can_node
 ```
 
-Salida esperada del nodo CAN:
+Expected output:
 
 ```text
 CANNode iniciado y suscrito a /can_command
 ```
 
-Para firmware ESP32, usar la guía específica: [`firmware/ESP_IDF_BUILD_GUIDE.md`](firmware/ESP_IDF_BUILD_GUIDE.md).
+For ESP32 firmware, use [`firmware/ESP_IDF_BUILD_GUIDE.md`](firmware/ESP_IDF_BUILD_GUIDE.md).
 
-## Estado actual
-
-| Área | Estado | Evidencia / ubicación |
-|---|---|---|
-| Estructura del repositorio | Avanzada | [`docs/repository_structure.md`](docs/repository_structure.md), [`docs/repository_audit.md`](docs/repository_audit.md) |
-| Firmware ESP32 J1-J4 | Compila localmente | [`firmware/esp32_joint_node/`](firmware/esp32_joint_node/) |
-| Firmware ESP32 J5/TB6600 | Compila localmente | [`firmware/esp32_stepper_node/J5_tb6600/`](firmware/esp32_stepper_node/J5_tb6600/) |
-| ROS 2 | Compila e inicia con `vcan` | [`ros2_ws/`](ros2_ws/), [`docs/ros2_entrypoints_validation.md`](docs/ros2_entrypoints_validation.md) |
-| CAN virtual | Validado localmente | `can_node` inicia con `can0` virtual. |
-| Pinouts ESP32 | Documentados | [`electronics/pinout_tables/esp32_pinout_table.md`](electronics/pinout_tables/esp32_pinout_table.md) |
-| Raspberry Pi + MCP2515 | Documentado | [`electronics/pinout_tables/raspberry_pi_mcp2515.md`](electronics/pinout_tables/raspberry_pi_mcp2515.md) |
-| Protocolo CAN | Documentado | [`firmware/can_protocol/can_messages.md`](firmware/can_protocol/can_messages.md) |
-| BOM | Inicial completa | [`docs/bom_template.csv`](docs/bom_template.csv) |
-| Esquemáticos | En proceso de cierre | [`electronics/schematics/`](electronics/schematics/) |
-| Validación | Estructura lista | [`validation/validation_plan.md`](validation/validation_plan.md), [`validation/media/media_index.md`](validation/media/media_index.md) |
-| Licencia y citación | Multi-licencia inicial lista | [`LICENSE`](LICENSE), [`LICENSES/`](LICENSES/), [`CITATION.cff`](CITATION.cff) |
-| CAD/STEP/STL | Pendiente crítico | [`hardware/`](hardware/) |
-| Paper | Pendiente | [`paper/`](paper/) |
-
-## Estructura del repositorio
+## Repository structure
 
 ```text
 assistbelle-arm-elevator-subsystem/
 ├── README.md
 ├── LICENSE
-├── LICENSES/
 ├── CITATION.cff
 ├── requirements.txt
 ├── docs/
@@ -102,48 +80,57 @@ assistbelle-arm-elevator-subsystem/
 └── validation/
 ```
 
-| Carpeta / archivo | Estado | Propósito |
+| Path | Purpose |
+|---|---|
+| [`docs/`](docs/) | General documentation, operation, safety, calibration, troubleshooting, BOM and checklists. |
+| [`electronics/`](electronics/) | Schematics, wiring diagrams, power distribution, pinout tables and electronics images. |
+| [`firmware/`](firmware/) | ESP32 firmware organized by joint/elevator node. |
+| [`hardware/`](hardware/) | Mechanical CAD, STEP, STL, drawings, photos and fasteners. |
+| [`paper/`](paper/) | Figures, tables, references and manuscript-support material. |
+| [`ros2_ws/`](ros2_ws/) | ROS 2 workspace and `can_comm_pkg`. |
+| [`software/`](software/) | Auxiliary software notes or scripts outside the ROS 2 workspace. |
+| [`validation/`](validation/) | Curated validation data, media, figures and test summaries. |
+
+Legacy folders from the development repository, such as `Codigo_esp32/` or `resultados/`, are not part of the recommended public structure. Useful firmware should be kept under [`firmware/`](firmware/), and curated evidence should be kept under [`validation/`](validation/).
+
+## Documentation map
+
+| Document | Description |
+|---|---|
+| [`docs/README.md`](docs/README.md) | Documentation index. |
+| [`docs/project_status.md`](docs/project_status.md) | Current project status and immediate pending items. |
+| [`docs/repository_audit.md`](docs/repository_audit.md) | Repository audit and closure criteria. |
+| [`docs/repository_structure.md`](docs/repository_structure.md) | Repository organization rules. |
+| [`docs/hardwarex_master_checklist.md`](docs/hardwarex_master_checklist.md) | Master checklist for HardwareX completion. |
+| [`docs/publication_checklist.md`](docs/publication_checklist.md) | Publication-oriented checklist. |
+| [`docs/operation_manual.md`](docs/operation_manual.md) | Operation steps for ROS 2, SocketCAN and ESP-IDF. |
+| [`docs/calibration_manual.md`](docs/calibration_manual.md) | Initial calibration procedure. |
+| [`docs/safety_notes.md`](docs/safety_notes.md) | Safety notes for laboratory operation. |
+| [`docs/troubleshooting.md`](docs/troubleshooting.md) | Common errors and fixes. |
+| [`docs/ros2_entrypoints_validation.md`](docs/ros2_entrypoints_validation.md) | ROS 2 command validation routine. |
+| [`docs/bom_template.csv`](docs/bom_template.csv) | Active bill of materials. |
+| [`docs/license_overview.md`](docs/license_overview.md) | Multi-license policy. |
+
+## Current status
+
+| Area | Status | Reference |
 |---|---|---|
-| [`LICENSE`](LICENSE) | Activo | Resumen de la política multi-licencia. |
-| [`LICENSES/`](LICENSES/) | Activo | Textos de licencias por tipo de contenido. |
-| [`docs/`](docs/) | Activo | Estado, manuales, auditoría, checklist, BOM, seguridad y operación. |
-| [`electronics/`](electronics/) | Activo | Pinouts, cableado, potencia, esquemáticos e imágenes de electrónica. |
-| [`firmware/`](firmware/) | Activo | Firmware ESP32 organizado por nodo. |
-| [`hardware/`](hardware/) | Pendiente de contenido final | CAD, STEP, STL, planos, fotos mecánicas y fasteners. |
-| [`paper/`](paper/) | Pendiente de manuscrito | Figuras, tablas, referencias y archivos del artículo. |
-| [`ros2_ws/`](ros2_ws/) | Activo | Workspace ROS 2 completo del proyecto. |
-| [`software/`](software/) | Auxiliar | Guías de instalación y scripts no ROS 2. |
-| [`validation/`](validation/) | Activo | Datos curados, tablas, figuras y evidencias de validación. |
-
-### Carpetas no recomendadas en la versión pública
-
-| Carpeta | Acción |
-|---|---|
-| `Codigo_esp32/` | No usar como carpeta final; migrar código útil a [`firmware/`](firmware/). |
-| `resultados/` | No usar como dataset final; curar evidencias hacia [`validation/`](validation/). |
-| `.vscode/`, `.idea/`, `build/`, `install/`, `log/` | No versionar. |
-| `hardware/CAD_editable/`, `hardware/STEP/`, `hardware/STL/` | Usar carpetas canónicas en minúsculas: [`hardware/cad/`](hardware/cad/), [`hardware/step/`](hardware/step/), [`hardware/stl/`](hardware/stl/). |
-
-## Documentación principal
-
-| Documento | Descripción |
-|---|---|
-| [`docs/README.md`](docs/README.md) | Índice general de documentación. |
-| [`docs/project_status.md`](docs/project_status.md) | Estado actual del proyecto y pendientes principales. |
-| [`docs/repository_audit.md`](docs/repository_audit.md) | Auditoría de avance y criterio de cierre. |
-| [`docs/repository_structure.md`](docs/repository_structure.md) | Reglas de organización de carpetas. |
-| [`docs/hardwarex_master_checklist.md`](docs/hardwarex_master_checklist.md) | Checklist maestro para cerrar el paquete. |
-| [`docs/operation_manual.md`](docs/operation_manual.md) | Operación con ROS 2, SocketCAN y ESP-IDF. |
-| [`docs/calibration_manual.md`](docs/calibration_manual.md) | Guía inicial de calibración. |
-| [`docs/safety_notes.md`](docs/safety_notes.md) | Notas de uso seguro en laboratorio. |
-| [`docs/troubleshooting.md`](docs/troubleshooting.md) | Problemas comunes y soluciones. |
-| [`docs/ros2_entrypoints_validation.md`](docs/ros2_entrypoints_validation.md) | Validación de comandos ROS 2. |
-| [`docs/bom_template.csv`](docs/bom_template.csv) | Lista de materiales con costos y proveedores. |
-| [`docs/license_overview.md`](docs/license_overview.md) | Estado de licencias y citación. |
+| Repository organization | Advanced | [`docs/repository_structure.md`](docs/repository_structure.md) |
+| ESP32 firmware J1-J4 | Locally compiled | [`firmware/esp32_joint_node/`](firmware/esp32_joint_node/) |
+| ESP32 firmware J5 / TB6600 | Locally compiled | [`firmware/esp32_stepper_node/J5_tb6600/`](firmware/esp32_stepper_node/J5_tb6600/) |
+| ROS 2 / CAN bridge | Builds and starts with `vcan` | [`ros2_ws/`](ros2_ws/), [`docs/ros2_entrypoints_validation.md`](docs/ros2_entrypoints_validation.md) |
+| ESP32 pinouts | Documented | [`electronics/pinout_tables/esp32_pinout_table.md`](electronics/pinout_tables/esp32_pinout_table.md) |
+| Raspberry Pi + MCP2515 | Documented | [`electronics/pinout_tables/raspberry_pi_mcp2515.md`](electronics/pinout_tables/raspberry_pi_mcp2515.md) |
+| CAN protocol | Documented | [`firmware/can_protocol/can_messages.md`](firmware/can_protocol/can_messages.md) |
+| BOM | Preliminary complete | [`docs/bom_template.csv`](docs/bom_template.csv) |
+| Schematics | In progress | [`electronics/schematics/`](electronics/schematics/) |
+| Validation | Structure ready | [`validation/validation_plan.md`](validation/validation_plan.md) |
+| Mechanical CAD / STEP / STL | Pending | [`hardware/`](hardware/) |
+| Paper material | Pending | [`paper/`](paper/) |
 
 ## Firmware ESP32
 
-El firmware final vive en [`firmware/`](firmware/).
+The final ESP32 firmware is kept in [`firmware/`](firmware/):
 
 ```text
 firmware/
@@ -158,41 +145,31 @@ firmware/
     └── J5_tb6600/
 ```
 
-Documentos clave: [`firmware/README.md`](firmware/README.md), [`firmware/ESP_IDF_BUILD_GUIDE.md`](firmware/ESP_IDF_BUILD_GUIDE.md), [`firmware/can_protocol/can_messages.md`](firmware/can_protocol/can_messages.md).
-
-Compilar un nodo ESP32:
+Example build command:
 
 ```bash
-source /media/F15/Data/ESP_IDF_CONTAINER/v5.3.3/esp-idf/export.sh
-cd ~/assistbelle-arm-elevator-subsystem/firmware/esp32_joint_node/J1
+source /path/to/esp-idf/export.sh
+cd firmware/esp32_joint_node/J1
 idf.py set-target esp32
 idf.py build
 ```
 
 ## ROS 2
 
-El software ROS 2 se mantiene dentro de [`ros2_ws/`](ros2_ws/).
+The ROS 2 workspace is kept in [`ros2_ws/`](ros2_ws/):
 
 ```bash
-cd ~/assistbelle-arm-elevator-subsystem/ros2_ws
+cd ros2_ws
 source /opt/ros/jazzy/setup.bash
 rm -rf build install log
 colcon build --packages-select can_comm_pkg
 source install/setup.bash
 ```
 
-Crear CAN virtual:
+Main commands to validate:
 
 ```bash
-sudo modprobe vcan
-sudo ip link add dev can0 type vcan 2>/dev/null || true
-sudo ip link set up can0
 ros2 run can_comm_pkg can_node
-```
-
-Comandos principales a validar:
-
-```bash
 ros2 run can_comm_pkg control_teclado
 ros2 run can_comm_pkg can_traj
 ros2 run can_comm_pkg can_slider
@@ -201,9 +178,9 @@ ros2 run can_comm_pkg j5_ramp
 ros2 run can_comm_pkg j5_trap
 ```
 
-## Electrónica
+## Electronics
 
-La documentación electrónica se organiza en [`electronics/`](electronics/):
+Electronics documentation is organized in [`electronics/`](electronics/):
 
 ```text
 electronics/
@@ -214,20 +191,11 @@ electronics/
 └── wiring_diagrams/
 ```
 
-Documentos principales:
+Current documentation includes ESP32 pinouts, Raspberry Pi + MCP2515 wiring, CAN/power bus notes, power-distribution notes and a schematics index. Final schematic exports, electronics photos and connector tables remain pending.
 
-- [`electronics/README.md`](electronics/README.md)
-- [`electronics/schematics/README.md`](electronics/schematics/README.md)
-- [`electronics/schematics/schematics_index.md`](electronics/schematics/schematics_index.md)
-- [`electronics/pinout_tables/esp32_pinout_table.md`](electronics/pinout_tables/esp32_pinout_table.md)
-- [`electronics/pinout_tables/raspberry_pi_mcp2515.md`](electronics/pinout_tables/raspberry_pi_mcp2515.md)
-- [`electronics/wiring_diagrams/bus_principal.md`](electronics/wiring_diagrams/bus_principal.md)
-- [`electronics/wiring_diagrams/nodos_controladores.md`](electronics/wiring_diagrams/nodos_controladores.md)
-- [`electronics/power_distribution/power_summary.md`](electronics/power_distribution/power_summary.md)
+## Mechanical hardware
 
-Pendiente de cierre: verificar nombres finales de esquemáticos, mantener PDF/PNG junto al archivo editable, crear tabla de conectores, subir fotos reales y confirmar consistencia entre esquemático, pinout y firmware.
-
-## Hardware mecánico
+Mechanical design files should be organized as:
 
 ```text
 hardware/
@@ -239,11 +207,11 @@ hardware/
 └── fasteners/
 ```
 
-Falta subir CAD editable, exportar STEP/STL, completar fasteners/planos y agregar fotos mecánicas finales.
+Editable CAD, STEP/STL exports, drawings, fasteners and final mechanical photos remain pending.
 
-## Validación
+## Validation
 
-La validación se organiza en [`validation/`](validation/):
+Validation material is organized in [`validation/`](validation/):
 
 ```text
 validation/
@@ -256,17 +224,18 @@ validation/
 └── pick_and_place_tests/
 ```
 
-Falta copiar o enlazar videos finales, crear figuras, completar tablas de resultados, documentar CAN físico, pick-and-place y percepción.
+Pending work includes curated videos, final CSV files, figures, physical CAN validation, pick-and-place validation and perception validation.
 
-## Lista de materiales
+## Bill of materials
 
-La BOM activa está en [`docs/bom_template.csv`](docs/bom_template.csv).
+The active BOM is available at [`docs/bom_template.csv`](docs/bom_template.csv).
 
-- 38 líneas activas de materiales/componentes.
-- Componentes no usados removidos: Astra/Astra Plus, batería LiPo, tablet y DRV8825.
-- Drivers finales diferenciados: DRV8871 para motores DC y TB6600 para NEMA.
-- Costos registrados y referenciales agregados.
-- Costo total preliminar activo: **S/ 4,328.63**.
+Current notes:
+
+- 38 active material/component lines.
+- Unused components removed from the active BOM: Astra/Astra Plus, LiPo battery, tablet and DRV8825.
+- DRV8871 and TB6600 are differentiated in the active design documentation.
+- Preliminary total: **S/ 4,328.63**.
 
 ## License
 
@@ -280,56 +249,23 @@ This repository uses a multi-license structure suitable for a HardwareX open-sou
 | Validation scripts and utilities | Apache-2.0 | [`LICENSES/Apache-2.0.txt`](LICENSES/Apache-2.0.txt) |
 | [`docs/`](docs/), [`paper/`](paper/), images, figures, manuals and assembly instructions | CC-BY-4.0 | [`LICENSES/CC-BY-4.0.txt`](LICENSES/CC-BY-4.0.txt) |
 
-The root [`LICENSE`](LICENSE) file summarizes the license policy. Detailed notes are in [`docs/license_overview.md`](docs/license_overview.md).
+The root [`LICENSE`](LICENSE) file summarizes this policy. See [`docs/license_overview.md`](docs/license_overview.md) for details.
 
-## Checklist de cierre
+## Remaining HardwareX closure items
 
-### Ya está avanzado
+- [ ] Confirm final schematic filenames and exports.
+- [ ] Update [`electronics/power_distribution/power_summary.md`](electronics/power_distribution/power_summary.md).
+- [ ] Create a final connector table.
+- [ ] Add electronics photos.
+- [ ] Validate all ROS 2 entry points from a clean clone.
+- [ ] Validate physical CAN with ESP32 nodes.
+- [ ] Add CAD, STEP and STL files.
+- [ ] Curate validation videos, CSV files and final figures.
+- [ ] Prepare paper figures, tables and references.
+- [ ] Translate final documentation to technical English where needed.
 
-- [x] Estructura general del repositorio.
-- [x] README principal reorganizado.
-- [x] Documentación base en [`docs/`](docs/).
-- [x] Firmware ESP32 migrado a [`firmware/`](firmware/).
-- [x] Firmware J1-J5 compilado localmente.
-- [x] ROS 2 compila localmente.
-- [x] `can_node` inicia con `can0` virtual.
-- [x] Pinouts ESP32 documentados.
-- [x] Raspberry Pi + MCP2515 documentado.
-- [x] Protocolo CAN documentado.
-- [x] BOM inicial completada.
-- [x] Plan de validación creado.
-- [x] Multi-license policy creada.
-- [x] `CITATION.cff` creado.
-- [x] Estructura para esquemáticos creada en [`electronics/schematics/`](electronics/schematics/).
-
-### Falta para una entrega HardwareX sólida
-
-- [ ] Indexar y revisar nombres finales de esquemáticos.
-- [ ] Probar todos los entry points ROS 2 principales.
-- [ ] Validar CAN físico con ESP32 reales.
-- [ ] Copiar o enlazar videos curados en [`validation/media/`](validation/media/).
-- [ ] Completar tablas y figuras de validación.
-- [ ] Completar tabla final de conectores.
-- [ ] Subir fotos de electrónica.
-- [ ] Subir CAD editable.
-- [ ] Exportar STEP y STL.
-- [ ] Completar fasteners y planos.
-- [ ] Preparar figuras y tablas del manuscrito.
-- [ ] Traducir documentación clave al inglés técnico.
-- [ ] Revisar placeholders antes de publicación.
-
-## Enfoque recomendado del artículo
-
-Título tentativo:
+## Recommended article focus
 
 **Open-source design and experimental validation of a CAN-based assistive robotic manipulator for medical supply handling**
 
-El aporte principal del repositorio está en presentar un prototipo robótico reproducible con documentación completa de firmware, ROS 2, electrónica, comunicación CAN, BOM y validación experimental.
-
-## Notas de publicación
-
-- El sistema debe describirse como prototipo de laboratorio o entorno controlado.
-- No afirmar desempeño clínico sin validación formal.
-- No subir toolchains, builds ni archivos generados.
-- Mantener los datos brutos separados de la validación curada.
-- Usar [`docs/project_status.md`](docs/project_status.md) y [`docs/repository_audit.md`](docs/repository_audit.md) como fuente de verdad del avance.
+The main contribution is a reproducible robotic arm/elevator subsystem with firmware, ROS 2 control, CAN communication, electronics documentation, BOM and experimental validation material for controlled laboratory use.
