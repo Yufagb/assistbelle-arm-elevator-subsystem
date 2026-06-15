@@ -1,5 +1,7 @@
-python-can
-numpy
-matplotlib
-opencv-python
-pyzbar
+# Core Python dependencies for the ROS 2 helper scripts and validation utilities.
+# ROS 2 packages themselves should be installed through the system ROS distribution.
+python-can>=4.0
+numpy>=1.23
+matplotlib>=3.5
+opencv-python>=4.7
+pyzbar>=0.1.9
