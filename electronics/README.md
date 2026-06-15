@@ -1,36 +1,39 @@
-# Electrónica
+<!-- SPDX-License-Identifier: CERN-OHL-S-2.0 -->
 
-Documentación eléctrica y electrónica del subsistema de brazo y elevador de Assistbelle.
+# Electronics
 
-## Índice
+Electrical and electronics documentation for the Assistbelle robotic arm and elevator subsystem.
 
-- [Mapa de carpetas](#mapa-de-carpetas)
-- [Estado actual](#estado-actual)
-- [Documentos principales](#documentos-principales)
-- [Pendientes de cierre](#pendientes-de-cierre)
+## Index
 
-## Mapa de carpetas
+- [Folder map](#folder-map)
+- [Current status](#current-status)
+- [Main documents](#main-documents)
+- [Closure pending items](#closure-pending-items)
 
-| Carpeta | Contenido | Estado |
+## Folder map
+
+| Folder | Content | Status |
 |---|---|---|
-| [`schematics/`](schematics/) | Esquemáticos eléctricos y exportaciones visuales. | En proceso de cierre |
-| [`wiring_diagrams/`](wiring_diagrams/) | Diagramas prácticos de cableado. | Parcial |
-| [`pinout_tables/`](pinout_tables/) | Tablas de pines ESP32, Raspberry Pi y módulos CAN. | Avanzado |
-| [`power_distribution/`](power_distribution/) | Distribución de potencia, 12 V, 5 V y GND. | Parcial |
-| [`images/`](images/) | Fotos o capturas de electrónica. | Pendiente de fotos finales |
+| [`schematics/`](schematics/) | Electrical schematics and visual exports. | In progress |
+| [`wiring_diagrams/`](wiring_diagrams/) | Practical wiring documentation and connector tables. | Partial |
+| [`pinout_tables/`](pinout_tables/) | ESP32, Raspberry Pi and CAN-module pinout tables. | Advanced |
+| [`power_distribution/`](power_distribution/) | Power supply, 12 V actuator rail, 5 V logic rail and grounding notes. | Updated, pending measurements/photos |
+| [`images/`](images/) | Electronics photos and captures. | Pending final photos |
 
-## Estado actual
+## Current status
 
-| Bloque | Estado | Referencia |
+| Block | Status | Reference |
 |---|---|---|
-| Pinout ESP32 por nodo | Documentado | [`pinout_tables/esp32_pinout_table.md`](pinout_tables/esp32_pinout_table.md) |
-| Raspberry Pi + MCP2515 | Documentado | [`pinout_tables/raspberry_pi_mcp2515.md`](pinout_tables/raspberry_pi_mcp2515.md) |
-| Bus principal | Documentado en texto | [`wiring_diagrams/bus_principal.md`](wiring_diagrams/bus_principal.md) |
-| Nodos controladores | Documentado en texto | [`wiring_diagrams/nodos_controladores.md`](wiring_diagrams/nodos_controladores.md) |
-| Potencia | Resumen inicial | [`power_distribution/power_summary.md`](power_distribution/power_summary.md) |
-| Esquemáticos | Subidos o en proceso de indexado | [`schematics/schematics_index.md`](schematics/schematics_index.md) |
+| ESP32 node pinout | Documented | [`pinout_tables/esp32_pinout_table.md`](pinout_tables/esp32_pinout_table.md) |
+| Raspberry Pi + MCP2515 | Documented | [`pinout_tables/raspberry_pi_mcp2515.md`](pinout_tables/raspberry_pi_mcp2515.md) |
+| Main bus | Documented in text | [`wiring_diagrams/bus_principal.md`](wiring_diagrams/bus_principal.md) |
+| Controller nodes | Driver assignment documented, physical verification pending | [`wiring_diagrams/nodos_controladores.md`](wiring_diagrams/nodos_controladores.md) |
+| Connector table | Template created, physical connector data pending | [`wiring_diagrams/connector_table.md`](wiring_diagrams/connector_table.md) |
+| Power distribution | Updated with Dell 12 V supply, LM2596S 5 V converter and panic-button behavior | [`power_distribution/power_summary.md`](power_distribution/power_summary.md) |
+| Schematics | Structure and review criteria ready | [`schematics/schematics_index.md`](schematics/schematics_index.md) |
 
-## Documentos principales
+## Main documents
 
 - [`schematics/README.md`](schematics/README.md)
 - [`schematics/schematics_index.md`](schematics/schematics_index.md)
@@ -38,12 +41,16 @@ Documentación eléctrica y electrónica del subsistema de brazo y elevador de A
 - [`pinout_tables/raspberry_pi_mcp2515.md`](pinout_tables/raspberry_pi_mcp2515.md)
 - [`wiring_diagrams/bus_principal.md`](wiring_diagrams/bus_principal.md)
 - [`wiring_diagrams/nodos_controladores.md`](wiring_diagrams/nodos_controladores.md)
+- [`wiring_diagrams/connector_table.md`](wiring_diagrams/connector_table.md)
 - [`power_distribution/power_summary.md`](power_distribution/power_summary.md)
 
-## Pendientes de cierre
+## Closure pending items
 
-- [ ] Confirmar que los esquemáticos subidos cubran sistema general, CAN, potencia y drivers.
-- [ ] Exportar cada esquemático editable a PDF/PNG.
-- [ ] Agregar fotos reales de electrónica en [`images/`](images/).
-- [ ] Crear tabla final de conectores.
-- [ ] Verificar consistencia entre esquemáticos, pinouts, firmware y BOM.
+- [ ] Confirm final schematic filenames and exports.
+- [ ] Export each editable schematic to PDF/PNG.
+- [ ] Add real electronics photos in [`images/`](images/).
+- [ ] Fill final connector table from physical inspection.
+- [ ] Confirm Dell server power-supply model.
+- [ ] Measure 12 V actuator rail current during representative tests.
+- [ ] Measure 5 V logic rail current.
+- [ ] Verify consistency between schematics, connector table, pinouts, firmware and BOM.
