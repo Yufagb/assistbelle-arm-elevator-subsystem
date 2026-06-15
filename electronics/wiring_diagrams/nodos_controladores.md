@@ -1,73 +1,107 @@
-# Nodos controladores
+<!-- SPDX-License-Identifier: CERN-OHL-S-2.0 -->
 
-Documento generado a partir de la tesis y de los diagramas del Anexo 11.
+# Controller nodes
 
-## Arquitectura general
+This document summarizes the controller-node architecture for the Assistbelle robotic arm and elevator subsystem.
 
-La tesis describe 5 nodos controladores basados en ESP32 y comunicacion CAN mediante transceptores SN65HVD230D.
+## Scope
 
-| Nodo | Actuador / subsistema | Driver | Funcion principal |
-|---|---|---|---|
-| Nodo 1 | Articulacion 1 / base | DRV8871 | Motor DC con encoder de cuadratura. |
-| Nodo 2 | Articulacion 2 / hombro | IBT-2 | Motor DC con encoder de cuadratura. |
-| Nodo 3 | Articulacion 3 / codo | IBT-2 | Motor DC con encoder de cuadratura. |
-| Nodo 4 | Articulacion 4 / muneca + gripper | DRV8871 + servo | Motor DC con encoder y control de pinza. |
-| Nodo 5 | Elevador / eje prismatico | TB6600 | Dos motores paso a paso NEMA 23. |
+The controller nodes described here correspond to the robotic arm and vertical elevator subsystem. The information is based on the thesis diagrams, firmware pinout documentation and the current design notes. The physical driver assignment must be verified on the robot during the next hardware access session.
 
-## Nodo DC con DRV8871
+## General architecture
 
-El diagrama del Anexo 11.2 muestra un nodo basado en ESP32 DevKit y SN65HVD230D para bus CAN.
+The subsystem uses distributed ESP32-based controller nodes connected through CAN using SN65HVD230D CAN transceivers.
 
-Senales principales:
+| Node | Actuator / subsystem | Current documented driver | Main function | Verification status |
+|---|---|---|---|---|
+| J1 / Node 1 | Joint 1 / base | DRV8871 | DC motor with quadrature encoder. | To be physically verified. |
+| J2 / Node 2 | Joint 2 / shoulder | IBT-2 | DC motor with quadrature encoder. | To be physically verified. |
+| J3 / Node 3 | Joint 3 / elbow | IBT-2 | DC motor with quadrature encoder. | To be physically verified. |
+| J4 / Node 4 | Joint 4 / wrist + gripper | DRV8871 + servo | DC motor with encoder and gripper servo control. | To be physically verified. |
+| J5 / Node 5 | Vertical elevator / prismatic axis | TB6600 | Stepper motor control for elevator motion. | To be physically verified. |
 
-| Senal | Funcion |
+## Current driver assignment
+
+The current documentation should use the following driver assignment until the physical inspection is completed:
+
+| Joint | Driver | Notes |
+|---|---|---|
+| J1 | DRV8871 | Base joint. |
+| J2 | IBT-2 | Shoulder joint; self-locking mechanical behavior reported when actuator power is cut. |
+| J3 | IBT-2 | Elbow joint; self-locking mechanical behavior reported when actuator power is cut. |
+| J4 | DRV8871 + servo | Wrist motor plus gripper servo. |
+| J5 | TB6600 | Vertical elevator / prismatic axis. |
+
+## DRV8871-based DC node
+
+The DRV8871-based node is used for J1 and J4 in the current documentation.
+
+Main signals:
+
+| Signal | Function |
 |---|---|
-| PWM / control motor | Entrada de control hacia el DRV8871. |
-| Encoder A | Fase A del codificador. |
-| Encoder B | Fase B del codificador. |
-| CAN TX/RX | Comunicacion logica ESP32 hacia transceptor CAN. |
-| CANH/CANL | Lineas diferenciales hacia bus CAN. |
-| 12V | Potencia de motor. |
-| 5V / 3.3V | Logica segun modulo usado. |
-| GND | Tierra comun. |
+| IN1 / PWM control | Motor-drive control input. |
+| IN2 / direction control | Motor-drive control input. |
+| Encoder A | Quadrature encoder phase A. |
+| Encoder B | Quadrature encoder phase B. |
+| CAN TX/RX | ESP32 logic communication to CAN transceiver. |
+| CANH/CANL | Differential CAN bus lines. |
+| 12 V | Motor power rail. |
+| 5 V / 3.3 V | Logic rail, depending on module requirements. |
+| GND | Ground reference according to the power-distribution strategy. |
 
-## Nodo DC con IBT-2
+## IBT-2-based DC node
 
-El diagrama del Anexo 11.3 muestra el uso de IBT-2 para motores DC de mayor corriente.
+The IBT-2-based node is documented for J2 and J3. This must be verified physically before final HardwareX submission.
 
-Senales principales:
+Main signals:
 
-| Senal | Funcion |
+| Signal | Function |
 |---|---|
-| RPWM | PWM en direccion positiva. |
-| LPWM | PWM en direccion negativa. |
-| R_EN | Habilitacion lado derecho. |
-| L_EN | Habilitacion lado izquierdo. |
-| Encoder A | Fase A del codificador. |
-| Encoder B | Fase B del codificador. |
-| CANH/CANL | Bus CAN. |
-| 12V | Potencia de motor. |
-| GND | Tierra comun. |
+| RPWM | PWM command for one motor direction. |
+| LPWM | PWM command for the opposite motor direction. |
+| R_EN | Right-side bridge enable. |
+| L_EN | Left-side bridge enable. |
+| Encoder A | Quadrature encoder phase A. |
+| Encoder B | Quadrature encoder phase B. |
+| CAN TX/RX | ESP32 logic communication to CAN transceiver. |
+| CANH/CANL | Differential CAN bus lines. |
+| 12 V | Motor power rail. |
+| GND | Ground reference according to the power-distribution strategy. |
 
-## Nodo del elevador con TB6600
+## TB6600 elevator node
 
-El diagrama del Anexo 11.4 muestra un nodo para control de motores paso a paso mediante drivers externos.
+The TB6600-based node is used for the vertical elevator / prismatic axis J5.
 
-Senales principales:
+Main signals:
 
-| Senal | Funcion |
+| Signal | Function |
 |---|---|
-| STEP | Pulso de avance de paso. |
-| DIR | Direccion de giro. |
-| EN | Habilitacion del driver. |
-| CANH/CANL | Bus CAN. |
-| 12V | Potencia de motor / driver segun implementacion. |
-| 5V | Logica. |
-| GND | Tierra comun. |
+| STEP / PUL | Step pulse signal. |
+| DIR | Direction signal. |
+| EN / ENA | Driver enable signal. |
+| CAN TX/RX | ESP32 logic communication to CAN transceiver. |
+| CANH/CANL | Differential CAN bus lines. |
+| 12 V | Stepper-driver power rail. |
+| 5 V | Logic rail. |
+| GND | Ground reference according to the power-distribution strategy. |
 
-## Pendientes
+## Validation checklist for next hardware access
 
-- Confirmar pines GPIO exactos usados en cada firmware ESP32.
-- Subir imagenes originales de los diagramas del Anexo 11.
-- Subir fotos reales de cada nodo.
-- Confirmar si todos los nodos usan la misma asignacion de pines CAN TX/RX.
+- [ ] Confirm visually that J1 uses DRV8871.
+- [ ] Confirm visually that J2 uses IBT-2.
+- [ ] Confirm visually that J3 uses IBT-2.
+- [ ] Confirm visually that J4 uses DRV8871 and a gripper servo.
+- [ ] Confirm visually that J5 uses TB6600.
+- [ ] Photograph each controller node.
+- [ ] Photograph wiring from ESP32 to driver for each node.
+- [ ] Confirm power connections: actuator rail, logic rail and grounds.
+- [ ] Confirm CAN TX/RX mapping against `electronics/pinout_tables/esp32_pinout_table.md`.
+- [ ] Update this document if the physical robot differs from the current documented assignment.
+
+## Related documents
+
+- [`../pinout_tables/esp32_pinout_table.md`](../pinout_tables/esp32_pinout_table.md)
+- [`../power_distribution/power_summary.md`](../power_distribution/power_summary.md)
+- [`bus_principal.md`](bus_principal.md)
+- [`../schematics/schematics_index.md`](../schematics/schematics_index.md)
