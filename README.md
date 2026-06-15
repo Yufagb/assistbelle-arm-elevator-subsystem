@@ -1,3 +1,5 @@
+<!-- SPDX-License-Identifier: CC-BY-4.0 -->
+
 # Assistbelle / Robot asistivo 5-DOF
 
 Repositorio público de preparación para publicación tipo **HardwareX** de un manipulador robótico asistivo de 5 grados de libertad, orientado a tareas de laboratorio para traslado y manipulación de implementos médicos en un entorno controlado.
@@ -19,6 +21,7 @@ El sistema integra **ROS 2**, **bus CAN / SocketCAN**, **ESP32 + ESP-IDF**, nodo
 - [Hardware mecánico](#hardware-mecánico)
 - [Validación](#validación)
 - [Lista de materiales](#lista-de-materiales)
+- [License](#license)
 - [Checklist de cierre](#checklist-de-cierre)
 - [Enfoque recomendado del artículo](#enfoque-recomendado-del-artículo)
 
@@ -76,7 +79,7 @@ Para firmware ESP32, usar la guía específica: [`firmware/ESP_IDF_BUILD_GUIDE.m
 | BOM | Inicial completa | [`docs/bom_template.csv`](docs/bom_template.csv) |
 | Esquemáticos | En proceso de cierre | [`electronics/schematics/`](electronics/schematics/) |
 | Validación | Estructura lista | [`validation/validation_plan.md`](validation/validation_plan.md), [`validation/media/media_index.md`](validation/media/media_index.md) |
-| Licencia y citación | Inicial listo | [`LICENSE`](LICENSE), [`CITATION.cff`](CITATION.cff) |
+| Licencia y citación | Multi-licencia inicial lista | [`LICENSE`](LICENSE), [`LICENSES/`](LICENSES/), [`CITATION.cff`](CITATION.cff) |
 | CAD/STEP/STL | Pendiente crítico | [`hardware/`](hardware/) |
 | Paper | Pendiente | [`paper/`](paper/) |
 
@@ -86,6 +89,7 @@ Para firmware ESP32, usar la guía específica: [`firmware/ESP_IDF_BUILD_GUIDE.m
 assistbelle-arm-elevator-subsystem/
 ├── README.md
 ├── LICENSE
+├── LICENSES/
 ├── CITATION.cff
 ├── requirements.txt
 ├── docs/
@@ -100,6 +104,8 @@ assistbelle-arm-elevator-subsystem/
 
 | Carpeta / archivo | Estado | Propósito |
 |---|---|---|
+| [`LICENSE`](LICENSE) | Activo | Resumen de la política multi-licencia. |
+| [`LICENSES/`](LICENSES/) | Activo | Textos de licencias por tipo de contenido. |
 | [`docs/`](docs/) | Activo | Estado, manuales, auditoría, checklist, BOM, seguridad y operación. |
 | [`electronics/`](electronics/) | Activo | Pinouts, cableado, potencia, esquemáticos e imágenes de electrónica. |
 | [`firmware/`](firmware/) | Activo | Firmware ESP32 organizado por nodo. |
@@ -262,6 +268,20 @@ La BOM activa está en [`docs/bom_template.csv`](docs/bom_template.csv).
 - Costos registrados y referenciales agregados.
 - Costo total preliminar activo: **S/ 4,328.63**.
 
+## License
+
+This repository uses a multi-license structure suitable for a HardwareX open-source hardware submission:
+
+| Directory / asset type | License | License text |
+|---|---|---|
+| [`hardware/`](hardware/) | CERN-OHL-S v2.0 | [`LICENSES/CERN-OHL-S-2.0.txt`](LICENSES/CERN-OHL-S-2.0.txt) |
+| [`electronics/`](electronics/) | CERN-OHL-S v2.0 | [`LICENSES/CERN-OHL-S-2.0.txt`](LICENSES/CERN-OHL-S-2.0.txt) |
+| [`firmware/`](firmware/), [`ros2_ws/`](ros2_ws/), [`software/`](software/) | Apache-2.0 | [`LICENSES/Apache-2.0.txt`](LICENSES/Apache-2.0.txt) |
+| Validation scripts and utilities | Apache-2.0 | [`LICENSES/Apache-2.0.txt`](LICENSES/Apache-2.0.txt) |
+| [`docs/`](docs/), [`paper/`](paper/), images, figures, manuals and assembly instructions | CC-BY-4.0 | [`LICENSES/CC-BY-4.0.txt`](LICENSES/CC-BY-4.0.txt) |
+
+The root [`LICENSE`](LICENSE) file summarizes the license policy. Detailed notes are in [`docs/license_overview.md`](docs/license_overview.md).
+
 ## Checklist de cierre
 
 ### Ya está avanzado
@@ -278,7 +298,7 @@ La BOM activa está en [`docs/bom_template.csv`](docs/bom_template.csv).
 - [x] Protocolo CAN documentado.
 - [x] BOM inicial completada.
 - [x] Plan de validación creado.
-- [x] `LICENSE` creado.
+- [x] Multi-license policy creada.
 - [x] `CITATION.cff` creado.
 - [x] Estructura para esquemáticos creada en [`electronics/schematics/`](electronics/schematics/).
 
