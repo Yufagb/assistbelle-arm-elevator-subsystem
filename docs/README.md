@@ -21,8 +21,9 @@ Esta carpeta concentra la documentación general del paquete HardwareX de Assist
 7. [`calibration_manual.md`](calibration_manual.md): calibración.
 8. [`safety_notes.md`](safety_notes.md): seguridad.
 9. [`troubleshooting.md`](troubleshooting.md): problemas comunes.
-10. [`bom_template.csv`](bom_template.csv): lista de materiales.
-11. [`license_overview.md`](license_overview.md): licencias y citación.
+10. [`bom_template.csv`](bom_template.csv): lista de materiales activa.
+11. [`procurement/README.md`](procurement/README.md): compras y evidencia pública curada.
+12. [`license_overview.md`](license_overview.md): licencias y citación.
 
 ## Archivos principales
 
@@ -39,6 +40,8 @@ Esta carpeta concentra la documentación general del paquete HardwareX de Assist
 | [`troubleshooting.md`](troubleshooting.md) | Solución de errores comunes. |
 | [`ros2_entrypoints_validation.md`](ros2_entrypoints_validation.md) | Pruebas de entry points ROS 2. |
 | [`bom_template.csv`](bom_template.csv) | BOM activa con costos y proveedores. |
+| [`procurement/README.md`](procurement/README.md) | Política pública de evidencia de compras. |
+| [`procurement/purchase_log_public.csv`](procurement/purchase_log_public.csv) | Log público y curado de compras/procurement. |
 | [`license_overview.md`](license_overview.md) | Licencias, `LICENSE` y `CITATION.cff`. |
 
 ## Relación con otras carpetas
@@ -60,6 +63,7 @@ Esta carpeta concentra la documentación general del paquete HardwareX de Assist
 - Raspberry Pi + MCP2515 documentado.
 - ROS 2 compila localmente y `can_node` inicia con `can0` virtual.
 - BOM activa actualizada con 38 líneas.
+- Evidencia pública de compras creada en [`procurement/`](procurement/).
 - Esquemáticos subidos o en proceso de indexado.
 - CAD/STEP/STL, validación curada y manuscrito siguen pendientes.
 
@@ -71,4 +75,5 @@ Esta carpeta concentra la documentación general del paquete HardwareX de Assist
 - Mantener electrónica en [`../electronics/`](../electronics/).
 - Mantener mecánica en [`../hardware/`](../hardware/).
 - Mantener evidencias curadas en [`../validation/`](../validation/).
+- Mantener comprobantes brutos o documentos financieros fuera del repositorio público salvo que estén revisados y redactados.
 - Antes del envío final, traducir documentación clave al inglés técnico.
