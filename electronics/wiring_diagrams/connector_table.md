@@ -33,14 +33,14 @@ Main Bus also shows two 120-ohm CAN terminations: `RT1` and `RT2`. Their physica
 
 ## Raspberry Pi to MCP2515 connector inventory
 
-Extracted from `RASPBERRYPI_MCP2515.pdf`.
+Extracted from `RASPBERRYPI_MCP2515.pdf` and updated with the confirmed implementation note that the MCP2515 module is powered from 5 V.
 
 | Connector ID | Schematic connector | Subsystem | Pin count | Signals | Status | Notes |
 |---|---|---|---:|---|---|---|
-| C-RPI-GPIO | `J_RPI` | Raspberry Pi GPIO | 40 | 3V3, 5V, GND, MOSI, MISO, SCK, CS_CAN, INT_CAN | Known from schematic, wiring to verify | Raspberry Pi 40-pin header. |
-| C-MCP-HEADER | `J_MCP` | MCP2515 module | 10 | 3V3, GND, SCK, MOSI, MISO, CS_CAN, NC, INT_CAN, CANL, CANH | Known from schematic, voltage to verify | Schematic shows MCP header referenced to 3V3. |
+| C-RPI-GPIO | `J_RPI` | Raspberry Pi GPIO | 40 | 3V3, 5V, GND, MOSI, MISO, SCK, CS_CAN, INT_CAN | Known from schematic, wiring to verify | Raspberry Pi 40-pin header. SPI/INT signals must remain Raspberry Pi 3.3 V logic-compatible. |
+| C-MCP-HEADER | `J_MCP` | MCP2515 module | 10 | 3V3, GND, SCK, MOSI, MISO, CS_CAN, NC, INT_CAN, CANL, CANH | Known from schematic, logic compatibility to verify | Schematic shows a 3V3 reference at the MCP header; final module power is 5 V through `J_POWER`. |
 | C-MCP-CAN | `J_CAN` | CAN connector | 2 | CANH, CANL | Known from schematic, pin order to verify | CAN output from MCP2515 module. |
-| C-MCP-PWR | `J_POWER` | Power connector | 2 | 5V, GND | Known from schematic, role to verify | Separate 5 V power connector. |
+| C-MCP-PWR | `J_POWER` | MCP2515 module power | 2 | 5V, GND | Known from schematic and implementation | 5 V module power input. |
 
 ## DRV8871 DC motor controller connector inventory
 
@@ -113,7 +113,7 @@ Use this checklist during the next robot access session.
 - [ ] Confirm Raspberry Pi and ESP32 nodes remain powered after panic-button activation.
 - [ ] Photograph CAN bus termination resistors RT1 and RT2.
 - [ ] Confirm CANH/CANL connector orientation.
-- [ ] Confirm MCP2515 module voltage: 3.3 V or 5 V.
+- [ ] Confirm MCP2515 module receives 5 V power and is safe for Raspberry Pi 3.3 V SPI/INT signals.
 - [ ] Photograph J1 driver and connector.
 - [ ] Photograph J2 driver and connector.
 - [ ] Photograph J3 driver and connector.
@@ -131,6 +131,6 @@ Use this checklist during the next robot access session.
 - Cable gauges for logic, CAN and driver control signals.
 - Exact Dell server power-supply model.
 - Physical location of CAN termination resistors RT1 and RT2.
-- MCP2515 module operating voltage in the real implementation.
+- Exact MCP2515 module model or evidence that it is safe with Raspberry Pi 3.3 V SPI/INT logic while powered from 5 V.
 - Final ground-bonding or isolation detail between Power GND and Signal GND.
 - Final photos for `electronics/images/`.
