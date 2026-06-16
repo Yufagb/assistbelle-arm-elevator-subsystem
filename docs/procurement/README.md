@@ -19,6 +19,8 @@ Do **not** upload raw receipts, card statements, full order screenshots or reimb
 | File | Purpose | Status |
 |---|---|---|
 | [`purchase_log_public.csv`](purchase_log_public.csv) | Public, normalized purchase/procurement evidence log. | Created from uploaded purchase documents. |
+| [`usage_reconciliation.md`](usage_reconciliation.md) | Active/legacy/to-reconcile classification from purchases, schematics, firmware and current docs. | Created; physical verification pending. |
+| [`../../hardware/fasteners/structural_profiles_table.csv`](../../hardware/fasteners/structural_profiles_table.csv) | V-slot/profile/bracket/fastener reconciliation table. | Created; CAD/robot verification pending. |
 | [`../bom_template.csv`](../bom_template.csv) | Active BOM for the HardwareX package. | Existing active BOM; must be reconciled against this procurement log. |
 
 ## Sources reviewed
@@ -29,6 +31,7 @@ Do **not** upload raw receipts, card statements, full order screenshots or reimb
 | `Orders.pdf` | AliExpress completed orders from April and May 2025, including mechanical parts, electronics, bearings, DRV8871, DC-DC converter and legacy DRV8825 purchase. | Summarized into the public purchase log without exposing full raw order pages. |
 | `2_Liquidación de gastos (2F) 31_03_2025.xlsx` | Expense-liquidation rows including TB6600/NEMA23, MCP2515, Micro DC Motors, mechanical materials and electronics. | Summarized into the public purchase log; raw reimbursement file not uploaded. |
 | `2F Liquidacion tarjeta corporativa.xlsx` | Corporate-card liquidation rows including V-slot, fasteners, fabrication, ESP32 and legacy BTS7960 purchases. | Summarized into the public purchase log; raw reimbursement file not uploaded. |
+| Firmware and electronics docs | TB6600 code/pin evidence, controller-node assignments and schematic coverage. | Used to classify active vs legacy purchases. |
 
 ## Current public purchase-log summary
 
@@ -46,13 +49,13 @@ Some purchases were made during development but are not part of the current publ
 
 | Item / family | Current handling |
 |---|---|
-| DRV8871 | Active for J1/J4 DC motor-driver documentation. |
-| IBT-2 / BTS7960 | J2/J3 physical driver assignment must be verified; BTS7960 purchases are marked legacy/to-review unless confirmed in the final robot. |
-| TB6600 + NEMA23 | Active for J5/elevator. |
-| DRV8825 / A4988 / NEMA17 | Legacy or to-review; not part of current final elevator-driver choice. |
+| DRV8871 | Active for J1/J4 DC motor-driver documentation; physical verification pending. |
+| IBT-2 / BTS7960 | Current docs assign IBT-2 to J2/J3; BTS7960 purchases remain legacy/to-review until physical evidence confirms installed modules. |
+| TB6600 + NEMA23 | Active for J5/elevator; supported by BOM, procurement log and firmware/code documentation. |
+| DRV8825 / A4988 / NEMA17 | Legacy or test/prototype only; not part of current final elevator-driver choice. |
 | MCP2515 | Active CAN master interface. |
 | LM2596S 5 V converter | Active logic power supply. |
-| V-slot profiles, brackets and fasteners | Active or to-reconcile with mechanical CAD and fastener table. |
+| V-slot profiles, brackets and fasteners | Active or to-reconcile with mechanical CAD, photos and fastener table. |
 
 ## Reconciliation workflow
 
