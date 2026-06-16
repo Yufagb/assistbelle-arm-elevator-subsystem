@@ -1,20 +1,44 @@
-# Raspberry Pi 5 a MCP2515
+<!-- SPDX-License-Identifier: CERN-OHL-S-2.0 -->
 
-Tabla extraida de la tesis, Anexo 4: Integracion del MCP2515 con Raspberry Pi 5.
+# Raspberry Pi 5 to MCP2515
 
-## Mapeo de pines
+This document describes the Raspberry Pi 5 to MCP2515 CAN interface used in the Assistbelle robotic arm and elevator subsystem.
 
-| MCP2515 | GPIO BCM | Pin fisico Raspberry Pi 5 | Nota |
+## Source
+
+- Thesis / schematic reference: `RASPBERRYPI_MCP2515.pdf`.
+- The reviewed schematic shows a Raspberry Pi 40-pin header, an MCP2515 10-pin header, a 2-pin CAN connector and a 2-pin power connector.
+
+## Operating voltage note
+
+The real implementation uses **5 V to power the MCP2515 module**.
+
+The Raspberry Pi SPI and interrupt signals remain Raspberry Pi logic-level signals. Therefore, the MCP2515 module used in the final setup must be compatible with Raspberry Pi 3.3 V logic on the SPI/INT side, either through an appropriate module design, onboard level shifting or verified safe interface behavior.
+
+## Pin mapping
+
+| MCP2515 signal | Raspberry Pi BCM GPIO | Raspberry Pi physical pin | Notes |
 |---|---:|---:|---|
-| VCC | - | 2 / 4 | 5 V en modulos con regulador/transceptor. |
-| GND | - | 6 | Tierra comun. |
-| CS | GPIO8 | 24 | SPI0 CE0, interfaz can0. |
-| SCK | GPIO11 | 23 | Reloj SPI. |
-| MOSI | GPIO10 | 19 | Datos hacia MCP2515. |
-| MISO | GPIO9 | 21 | Datos desde MCP2515. |
-| INT | GPIO25 | 22 | Interrupcion del MCP2515. |
+| VCC / module power | - | 2 / 4 | 5 V supply for the MCP2515 module. |
+| GND | - | 6 | Signal ground reference. |
+| CS / CS_CAN | GPIO8 | 24 | SPI0 CE0, CAN interface chip select. |
+| SCK | GPIO11 | 23 | SPI clock. |
+| MOSI | GPIO10 | 19 | Data from Raspberry Pi to MCP2515. |
+| MISO | GPIO9 | 21 | Data from MCP2515 to Raspberry Pi. |
+| INT / INT_CAN | GPIO25 | 22 | MCP2515 interrupt line. |
+| CANH | - | - | CAN high differential line. |
+| CANL | - | - | CAN low differential line. |
 
-## Configuracion usada en la tesis
+## Schematic connector reference
+
+| Connector | Pin count | Signals | Notes |
+|---|---:|---|---|
+| `J_RPI` | 40 | Raspberry Pi 40-pin GPIO header | Includes 3V3, 5V, GND, MOSI, MISO, SCK, CS_CAN and INT_CAN labels. |
+| `J_MCP` | 10 | 3V3, GND, SCK, MOSI, MISO, CS_CAN, NC, INT_CAN, CANL, CANH | Header shown in the schematic for the MCP2515 module interface. |
+| `J_CAN` | 2 | CANH, CANL | CAN bus connector. |
+| `J_POWER` | 2 | 5V, GND | 5 V power connector used for the MCP2515 module supply in the real implementation. |
+
+## Configuration used
 
 ```bash
 dtparam=spi=on
@@ -22,15 +46,15 @@ dtoverlay=spi-bcm2835
 dtoverlay=mcp2515-can0,oscillator=8000000,interrupt=25
 ```
 
-## Puesta en marcha de CAN
+## CAN startup
 
 ```bash
-sudo ip link set can0 down
+sudo ip link set can0 down 2>/dev/null || true
 sudo ip link set can0 up type can bitrate 500000
 ip -details link show can0
 ```
 
-## Validaciones rapidas
+## Quick checks
 
 ```bash
 ls /dev/spidev*
@@ -43,9 +67,28 @@ ip link show
 candump can0
 ```
 
-## Notas electricas
+## Electrical notes
 
-- Mantener logica SPI/INT compatible con 3.3 V de Raspberry Pi.
-- Usar terminacion de 120 ohmios en cada extremo del bus CAN.
-- Todos los nodos deben trabajar con el mismo bitrate.
-- En la tesis se empleo 500 kbit/s.
+- MCP2515 module supply in the current implementation: **5 V**.
+- Raspberry Pi SPI/INT logic compatibility must be preserved at **3.3 V logic level**.
+- Use 120-ohm CAN termination only at the physical ends of the CAN bus.
+- All CAN nodes must use the same bitrate.
+- The documented CAN bitrate is **500 kbit/s**.
+- Confirm physically that CANH and CANL are not swapped.
+
+## Physical verification checklist
+
+- [ ] Photograph Raspberry Pi 5 to MCP2515 wiring.
+- [ ] Confirm the MCP2515 module receives 5 V at its power input.
+- [ ] Confirm the specific MCP2515 module used is safe for Raspberry Pi 3.3 V SPI/INT logic.
+- [ ] Confirm `CS_CAN` is connected to GPIO8 / physical pin 24.
+- [ ] Confirm `INT_CAN` is connected to GPIO25 / physical pin 22.
+- [ ] Confirm CANH/CANL orientation at `J_CAN`.
+- [ ] Update `electronics/images/README.md` with the final photo name when uploaded.
+
+## Related documents
+
+- [`../schematics/RASPBERRYPI_MCP2515.pdf`](../schematics/RASPBERRYPI_MCP2515.pdf)
+- [`../schematics/schematics_index.md`](../schematics/schematics_index.md)
+- [`../wiring_diagrams/connector_table.md`](../wiring_diagrams/connector_table.md)
+- [`../wiring_diagrams/bus_principal.md`](../wiring_diagrams/bus_principal.md)
