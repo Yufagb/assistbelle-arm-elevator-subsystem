@@ -6,7 +6,7 @@ This document summarizes the controller-node architecture for the Assistbelle ro
 
 ## Scope
 
-The controller nodes described here correspond to the robotic arm and vertical elevator subsystem. The information is based on the thesis diagrams, firmware pinout documentation and the current design notes. The physical driver assignment must be verified on the robot during the next hardware access session.
+The controller nodes described here correspond to the robotic arm and vertical elevator subsystem. The information is based on the thesis diagrams, firmware pinout documentation, current design notes and user-confirmed build information. Final photos and connector-level pin verification are still required before publication.
 
 ## General architecture
 
@@ -14,21 +14,21 @@ The subsystem uses distributed ESP32-based controller nodes connected through CA
 
 | Node | Actuator / subsystem | Current documented driver | Main function | Verification status |
 |---|---|---|---|---|
-| J1 / Node 1 | Joint 1 / base | DRV8871 | DC motor with quadrature encoder. | To be physically verified. |
-| J2 / Node 2 | Joint 2 / shoulder | IBT-2 | DC motor with quadrature encoder. | To be physically verified. |
-| J3 / Node 3 | Joint 3 / elbow | IBT-2 | DC motor with quadrature encoder. | To be physically verified. |
-| J4 / Node 4 | Joint 4 / wrist + gripper | DRV8871 + servo | DC motor with encoder and gripper servo control. | To be physically verified. |
-| J5 / Node 5 | Vertical elevator / prismatic axis | TB6600 | Stepper motor control for elevator motion. | To be physically verified. |
+| J1 / Node 1 | Joint 1 / base | DRV8871 | DC motor with quadrature encoder. | Documentation pending: board photo and wiring check. |
+| J2 / Node 2 | Joint 2 / shoulder | IBT-2 | DC motor with quadrature encoder. | User-confirmed active; photo and wiring check pending. |
+| J3 / Node 3 | Joint 3 / elbow | IBT-2 | DC motor with quadrature encoder. | User-confirmed active; photo and wiring check pending. |
+| J4 / Node 4 | Joint 4 / wrist + gripper | DRV8871 + servo | DC motor with encoder and gripper servo control. | Documentation pending: board photo and wiring check. |
+| J5 / Node 5 | Vertical elevator / prismatic axis | TB6600 | Stepper motor control for elevator motion. | Documentation pending: board photo and wiring check. |
 
 ## Current driver assignment
 
-The current documentation should use the following driver assignment until the physical inspection is completed:
+The current documentation should use the following driver assignment:
 
 | Joint | Driver | Notes |
 |---|---|---|
 | J1 | DRV8871 | Base joint. |
-| J2 | IBT-2 | Shoulder joint; self-locking mechanical behavior reported when actuator power is cut. |
-| J3 | IBT-2 | Elbow joint; self-locking mechanical behavior reported when actuator power is cut. |
+| J2 | IBT-2 | Shoulder joint; user-confirmed IBT-2 implementation; self-locking mechanical behavior reported when actuator power is cut. |
+| J3 | IBT-2 | Elbow joint; user-confirmed IBT-2 implementation; self-locking mechanical behavior reported when actuator power is cut. |
 | J4 | DRV8871 + servo | Wrist motor plus gripper servo. |
 | J5 | TB6600 | Vertical elevator / prismatic axis. |
 
@@ -52,7 +52,7 @@ Main signals:
 
 ## IBT-2-based DC node
 
-The IBT-2-based node is documented for J2 and J3. This must be verified physically before final HardwareX submission.
+The IBT-2-based node is used for J2 and J3. This assignment has been confirmed by the user during the project review, but board photos and exact connector pin mapping are still required for HardwareX publication.
 
 Main signals:
 
@@ -68,6 +68,8 @@ Main signals:
 | CANH/CANL | Differential CAN bus lines. |
 | 12 V | Motor power rail. |
 | GND | Ground reference according to the power-distribution strategy. |
+
+Firmware review note: current J2/J3 source definitions expose generic `DRV_IN1` and `DRV_IN2` names. During firmware review, verify whether these map to IBT-2 `RPWM`/`LPWM` with enable pins tied high, or whether firmware must explicitly define `RPWM`, `LPWM`, `R_EN` and `L_EN`.
 
 ## TB6600 elevator node
 
@@ -88,13 +90,12 @@ Main signals:
 
 ## Validation checklist for next hardware access
 
-- [ ] Confirm visually that J1 uses DRV8871.
-- [ ] Confirm visually that J2 uses IBT-2.
-- [ ] Confirm visually that J3 uses IBT-2.
-- [ ] Confirm visually that J4 uses DRV8871 and a gripper servo.
-- [ ] Confirm visually that J5 uses TB6600.
-- [ ] Photograph each controller node.
-- [ ] Photograph wiring from ESP32 to driver for each node.
+- [ ] Photograph J1 DRV8871 board and wiring.
+- [ ] Photograph J2 IBT-2 board and wiring.
+- [ ] Photograph J3 IBT-2 board and wiring.
+- [ ] Photograph J4 DRV8871 board, wrist motor wiring and gripper servo wiring.
+- [ ] Photograph J5 TB6600 board and wiring.
+- [ ] Confirm whether J2/J3 IBT-2 enable pins are tied high or controlled by ESP32 GPIO.
 - [ ] Confirm power connections: actuator rail, logic rail and grounds.
 - [ ] Confirm CAN TX/RX mapping against `electronics/pinout_tables/esp32_pinout_table.md`.
 - [ ] Update this document if the physical robot differs from the current documented assignment.
