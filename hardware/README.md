@@ -8,7 +8,16 @@ This folder should contain only the mechanical files needed to reproduce the rob
 
 ## Upload guide
 
-Follow [`design_files_upload_plan.md`](design_files_upload_plan.md) to upload the mechanical package step by step.
+Follow [`design_files_upload_plan.md`](design_files_upload_plan.md) to upload the mechanical package step by step. Use [`design_files_index.md`](design_files_index.md) to see which files are already uploaded and which are pending.
+
+## Current CAD snapshot
+
+The current uploaded CAD snapshot is **v60**. It is a working snapshot, not yet the final frozen HardwareX release.
+
+| File | Status | Notes |
+|---|---|---|
+| [`cad/complete_robot/ASM_Elevator_System_v60.f3z`](cad/complete_robot/ASM_Elevator_System_v60.f3z) | Uploaded | Editable Fusion 360 archive tracked through Git LFS. |
+| [`step/ASM_Elevator_System_v60.step`](step/ASM_Elevator_System_v60.step) | Uploaded | Full neutral STEP assembly tracked through Git LFS. |
 
 ## Canonical structure
 
@@ -47,14 +56,14 @@ Each custom mechanical part should have at least one of the following:
 
 ## Current next upload target
 
-The next required upload is the Fusion 360 assembly package:
+The next useful mechanical upload is the STL export for the fabricated/printed NEMA 23 mounting plate:
 
 ```text
-hardware/cad/complete_robot/ASM_Elevator_System_v54.f3z
+hardware/stl/FAB_ACT_002_NEMA23_Mounting_Plate_ABS_v60.stl
 ```
 
-After that, upload the full neutral STEP file:
+Then upload the spacer block STL:
 
 ```text
-hardware/step/ASM_Elevator_System_v54.step
+hardware/stl/FAB_GUI_002_Spacer_Block_ABS_Gray_v60.stl
 ```
