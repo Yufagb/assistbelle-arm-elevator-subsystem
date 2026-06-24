@@ -30,13 +30,13 @@ Subsystem STEP exports are optional for the current working snapshot but recomme
 | BOM ID | Target file | Status | Notes |
 |---|---|---|---|
 | `FAB_ACT_002` | [`stl/FAB_ACT_002_NEMA23_Mounting_Plate_ABS_v60.stl`](stl/FAB_ACT_002_NEMA23_Mounting_Plate_ABS_v60.stl) | Uploaded via Git LFS | NEMA 23 mounting plate STL for the current v60 snapshot. |
-| `FAB_GUI_002` | `stl/FAB_GUI_002_Spacer_Block_ABS_Gray_v60.stl` | Pending | Required if the spacer block is 3D printed/custom fabricated. |
+| `FAB_GUI_002` | [`stl/FAB_GUI_002_Spacer_Block_ABS_Gray_v60.stl`](stl/FAB_GUI_002_Spacer_Block_ABS_Gray_v60.stl) | Uploaded via Git LFS | Spacer block STL for the current v60 snapshot. |
 
-## Pending drawings / fabrication files
+## Drawings / fabrication files
 
 | BOM ID | Target file | Status | Notes |
 |---|---|---|---|
-| `FAB_STR_001` | `drawings/FAB_STR_001_Base_Plate_356x356x15_MDF_v60.pdf` | Pending | MDF base plate drawing with dimensions. |
+| `FAB_STR_001` | [`drawings/FAB_STR_001_Base_Plate_356x356x15_MDF_v60.pdf`](drawings/FAB_STR_001_Base_Plate_356x356x15_MDF_v60.pdf) | Uploaded | MDF base plate drawing with dimensions, material, units, tolerance and hole notes. |
 | `FAB_STR_002` | `drawings/FAB_STR_002_Top_Plate_420x400x3_StainlessSteel_v60.pdf` | Pending | Stainless steel top plate drawing with dimensions. |
 | `FAB_GUI_001` | `drawings/FAB_GUI_001_Gantry_Plate_20x80_StainlessSteel_v60.pdf` | Pending | Gantry plate drawing with dimensions. |
 | `FAB_STR_002` | `drawings/FAB_STR_002_Top_Plate_420x400x3_StainlessSteel_v60.dxf` | Recommended | DXF for laser/waterjet cutting if available. |
