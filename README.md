@@ -108,7 +108,9 @@ Legacy folders from the development repository, such as `Codigo_esp32/` or `resu
 | [`docs/safety_notes.md`](docs/safety_notes.md) | Safety notes for laboratory operation. |
 | [`docs/troubleshooting.md`](docs/troubleshooting.md) | Common errors and fixes. |
 | [`docs/ros2_entrypoints_validation.md`](docs/ros2_entrypoints_validation.md) | ROS 2 command validation routine. |
-| [`docs/bom_template.csv`](docs/bom_template.csv) | Active bill of materials. |
+| [`docs/bom/README.md`](docs/bom/README.md) | BOM index, source traceability and reading order. |
+| [`docs/bom/hardwarex_elevator_bom_final.md`](docs/bom/hardwarex_elevator_bom_final.md) | Readable HardwareX elevator BOM summary for GitHub reviewers. |
+| [`docs/bom/hardwarex_elevator_bom_final.csv`](docs/bom/hardwarex_elevator_bom_final.csv) | Complete machine-readable HardwareX elevator BOM. |
 | [`docs/license_overview.md`](docs/license_overview.md) | Multi-license policy. |
 
 ## Current status
@@ -122,7 +124,7 @@ Legacy folders from the development repository, such as `Codigo_esp32/` or `resu
 | ESP32 pinouts | Documented | [`electronics/pinout_tables/esp32_pinout_table.md`](electronics/pinout_tables/esp32_pinout_table.md) |
 | Raspberry Pi + MCP2515 | Documented | [`electronics/pinout_tables/raspberry_pi_mcp2515.md`](electronics/pinout_tables/raspberry_pi_mcp2515.md) |
 | CAN protocol | Documented | [`firmware/can_protocol/can_messages.md`](firmware/can_protocol/can_messages.md) |
-| BOM | Preliminary complete | [`docs/bom_template.csv`](docs/bom_template.csv) |
+| BOM | Updated for elevator CAD v54 | [`docs/bom/hardwarex_elevator_bom_final.md`](docs/bom/hardwarex_elevator_bom_final.md), [`docs/bom/hardwarex_elevator_bom_final.csv`](docs/bom/hardwarex_elevator_bom_final.csv) |
 | Schematics | In progress | [`electronics/schematics/`](electronics/schematics/) |
 | Validation | Structure ready | [`validation/validation_plan.md`](validation/validation_plan.md) |
 | Mechanical CAD / STEP / STL | Pending | [`hardware/`](hardware/) |
@@ -228,14 +230,28 @@ Pending work includes curated videos, final CSV files, figures, physical CAN val
 
 ## Bill of materials
 
-The active BOM is available at [`docs/bom_template.csv`](docs/bom_template.csv).
+The readable HardwareX elevator BOM is available at:
 
-Current notes:
+```text
+docs/bom/hardwarex_elevator_bom_final.md
+```
 
-- 38 active material/component lines.
-- Unused components removed from the active BOM: Astra/Astra Plus, LiPo battery, tablet and DRV8825.
-- DRV8871 and TB6600 are differentiated in the active design documentation.
-- Preliminary total: **S/ 4,328.63**.
+The complete machine-readable CSV is available at:
+
+```text
+docs/bom/hardwarex_elevator_bom_final.csv
+```
+
+Current BOM snapshot:
+
+- 29 BOM item rows + 1 estimated-total row.
+- Source workbook: `ASM_Elevator_System_HardwareX_BOM`.
+- Source tab: `BOM_Final_Clean`.
+- Associated CAD release: `ASM_Elevator_System.step` + `ASM_Elevator_System.f3z`, v54.
+- Estimated product total: **USD 408.85**.
+- Shipping, customs, taxes and marketplace price changes are excluded.
+
+The previous [`docs/bom_template.csv`](docs/bom_template.csv) is retained as a historical Spanish/PEN reference and should not be treated as the main HardwareX elevator BOM.
 
 ## License
 
@@ -253,19 +269,10 @@ The root [`LICENSE`](LICENSE) file summarizes this policy. See [`docs/license_ov
 
 ## Remaining HardwareX closure items
 
+- [ ] Upload final mechanical CAD, STEP, STL, drawings and prototype photos.
 - [ ] Confirm final schematic filenames and exports.
-- [ ] Update [`electronics/power_distribution/power_summary.md`](electronics/power_distribution/power_summary.md).
+- [ ] Create final CAN and power-distribution diagrams.
 - [ ] Create a final connector table.
 - [ ] Add electronics photos.
 - [ ] Validate all ROS 2 entry points from a clean clone.
-- [ ] Validate physical CAN with ESP32 nodes.
-- [ ] Add CAD, STEP and STL files.
-- [ ] Curate validation videos, CSV files and final figures.
-- [ ] Prepare paper figures, tables and references.
-- [ ] Translate final documentation to technical English where needed.
-
-## Recommended article focus
-
-**Open-source design and experimental validation of a CAN-based assistive robotic manipulator for medical supply handling**
-
-The main contribution is a reproducible robotic arm/elevator subsystem with firmware, ROS 2 control, CAN communication, electronics documentation, BOM and experimental validation material for controlled laboratory use.
+- [ ] Curate validation videos, CSV files and figures.
