@@ -1,36 +1,60 @@
+<!-- SPDX-License-Identifier: CC-BY-4.0 -->
+
 # Hardware
 
-Paquete de diseno mecanico del manipulador robotico Assistbelle.
+Mechanical design package for the Assistbelle robotic arm and elevator subsystem.
 
-Esta carpeta debe contener solo archivos mecanicos necesarios para reproducir el robot. No colocar aqui codigo ROS 2, firmware ni datos de validacion.
+This folder should contain only the mechanical files needed to reproduce the robot. Do not place ROS 2 code, firmware or validation data here.
 
-## Estructura canonica
+## Upload guide
 
-- cad: archivos CAD editables.
-- step: exportaciones STEP neutrales.
-- stl: archivos para impresion 3D.
-- drawings: planos mecanicos con cotas.
-- photos: fotos del sistema mecanico ensamblado.
-- fasteners: tornillos, tuercas, rodamientos, perfiles y piezas mecanicas estandar.
+Follow [`design_files_upload_plan.md`](design_files_upload_plan.md) to upload the mechanical package step by step.
 
-## Subestructura CAD
+## Canonical structure
 
-- cad/complete_robot: ensamble completo.
-- cad/arm: brazo de 4 GDL, articulaciones y eslabones.
-- cad/elevator: mecanismo vertical de elevacion.
-- cad/gripper: efector final o garra.
-- cad/mounts: soportes, adaptadores y brackets.
+| Folder | Content |
+|---|---|
+| `cad/` | Editable CAD files. |
+| `step/` | Neutral STEP exports. |
+| `stl/` | 3D-printable files. |
+| `drawings/` | Mechanical drawings with dimensions. |
+| `photos/` | Photos of the assembled mechanical system. |
+| `fasteners/` | Screws, nuts, bearings, profiles and standard mechanical parts. |
 
-## Carpetas antiguas
+## CAD substructure
 
-Las carpetas CAD_editable, STEP y STL fueron creadas en una pasada anterior. Para nuevos archivos usar solo las carpetas canonicas en minuscula: cad, step y stl.
+| Folder | Content |
+|---|---|
+| `cad/complete_robot/` | Complete assembly. |
+| `cad/arm/` | 4-DOF arm, joints and links. |
+| `cad/elevator/` | Vertical elevator mechanism. |
+| `cad/gripper/` | End effector or gripper. |
+| `cad/mounts/` | Mounts, adapters and brackets. |
 
-## Requisito minimo para publicacion
+## Legacy folders
 
-Cada pieza mecanica personalizada debe tener al menos uno de estos elementos:
+Older folders such as `CAD_editable`, `STEP` and `STL` were created during previous passes. For new files, use only the canonical lowercase folders: `cad`, `step` and `stl`.
 
-- archivo CAD editable
-- exportacion STEP
-- STL si es una pieza impresa en 3D
-- plano con dimensiones
-- foto mostrando la pieza instalada
+## Minimum publication requirement
+
+Each custom mechanical part should have at least one of the following:
+
+- editable CAD file;
+- STEP export;
+- STL file if it is 3D printed;
+- drawing with dimensions;
+- photo showing the part installed.
+
+## Current next upload target
+
+The next required upload is the Fusion 360 assembly package:
+
+```text
+hardware/cad/complete_robot/ASM_Elevator_System_v54.f3z
+```
+
+After that, upload the full neutral STEP file:
+
+```text
+hardware/step/ASM_Elevator_System_v54.step
+```
