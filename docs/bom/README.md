@@ -4,10 +4,17 @@
 
 This folder stores the curated bill of materials (BOM) files for the Assistbelle elevator/arm HardwareX package.
 
+## Recommended reading order
+
+1. Open [`hardwarex_elevator_bom_final.md`](hardwarex_elevator_bom_final.md) for the readable GitHub-rendered BOM.
+2. Open [`hardwarex_elevator_bom_final.csv`](hardwarex_elevator_bom_final.csv) for the complete machine-readable/source table.
+3. Use [`../bom_template.csv`](../bom_template.csv) only as the previous Spanish/PEN reference BOM.
+
 ## Files
 
 | File | Purpose | Source | Status |
 |---|---|---|---|
+| [`hardwarex_elevator_bom_final.md`](hardwarex_elevator_bom_final.md) | Human-readable Markdown summary with category subtotals and compact tables. | Generated from `hardwarex_elevator_bom_final.csv`. | Current readable BOM for GitHub reviewers. |
 | [`hardwarex_elevator_bom_final.csv`](hardwarex_elevator_bom_final.csv) | Final clean BOM export for the elevator CAD v54 review. | Google Sheet `ASM_Elevator_System_HardwareX_BOM`, tab `BOM_Final_Clean`, spreadsheet ID `13egV0GarW81nshgVwWWbSk6_NnhDDFxmWRa8S5-cg0I`. | Current exported BOM snapshot. |
 | [`../bom_template.csv`](../bom_template.csv) | Previous active public BOM template in Spanish/PEN format. | Earlier procurement reconciliation work. | Retained for continuity; superseded for the elevator-specific HardwareX BOM by `hardwarex_elevator_bom_final.csv`. |
 
@@ -42,4 +49,4 @@ The CSV keeps one primary supplier URL and one alternative/local URL when availa
 - Confirm stock, pack size and shipping before purchasing; prices are references and may change.
 - Review odd or CAD-derived quantities such as `STD_FAS_010` and `STD_FAS_011` against the final CAD assembly.
 - Keep private raw receipts, reimbursement sheets and order screenshots out of the public repository unless they are redacted.
-- If a row changes in the Google Sheet, re-export `BOM_Final_Clean` and update this CSV snapshot in the same commit.
+- If a row changes in the Google Sheet, re-export `BOM_Final_Clean`, update the CSV snapshot and regenerate the Markdown summary in the same commit.
