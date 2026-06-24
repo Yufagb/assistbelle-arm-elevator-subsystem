@@ -6,6 +6,27 @@ This checklist defines the upload order, file names and target folders for the m
 
 Use this file to upload the HardwareX mechanical package step by step. The goal is to keep Fusion 360 editable files, neutral CAD exports, printable files, drawings and photos traceable to the BOM and CAD release v54.
 
+## Large-file upload rule
+
+Do **not** upload large CAD files through the GitHub browser uploader. GitHub browser uploads are limited to 25 MiB, and CAD packages such as `.f3z`, `.step` and `.stl` can easily exceed that. This repository includes `.gitattributes` so CAD, media and binary design files are tracked through Git LFS.
+
+Recommended upload method for large CAD files:
+
+```bash
+git clone https://github.com/Yufagb/assistbelle-arm-elevator-subsystem.git
+cd assistbelle-arm-elevator-subsystem
+git lfs install
+git pull
+
+# Copy the file manually into the target folder, then:
+git status
+git add .gitattributes hardware/cad/complete_robot/ASM_Elevator_System_v54.f3z
+git commit -m "Add Fusion 360 elevator assembly v54"
+git push
+```
+
+If Git LFS is not available, use a GitHub Release asset or a stable Google Drive link as a temporary fallback, then document the link in `hardware/design_files_index.md`. Git LFS is preferred for reproducibility.
+
 ## General rules
 
 - Use version suffix `_v54` for files derived from the current CAD/BOM release.
@@ -20,14 +41,14 @@ Use this file to upload the HardwareX mechanical package step by step. The goal 
 
 | Status | Source file to upload | Target path | Required? | Notes |
 |---|---|---|---|---|
-| [ ] | `ASM_Elevator_System.f3z` | `hardware/cad/complete_robot/ASM_Elevator_System_v54.f3z` | Yes | Preferred editable assembly export because `.f3z` preserves referenced components. |
-| [ ] | `ASM_Elevator_System.f3d` | `hardware/cad/complete_robot/ASM_Elevator_System_v54.f3d` | Optional | Upload only if it is a standalone Fusion design and does not depend on external references. |
+| [ ] | `ASM_Elevator_System.f3z` | `hardware/cad/complete_robot/ASM_Elevator_System_v54.f3z` | Yes | Preferred editable assembly export because `.f3z` preserves referenced components. Use Git LFS if larger than 25 MiB. |
+| [ ] | `ASM_Elevator_System.f3d` | `hardware/cad/complete_robot/ASM_Elevator_System_v54.f3d` | Optional | Upload only if it is a standalone Fusion design and does not depend on external references. Use Git LFS if large. |
 
 ## Step 2 — Full neutral CAD export
 
 | Status | Source file to upload | Target path | Required? | Notes |
 |---|---|---|---|---|
-| [ ] | `ASM_Elevator_System.step` | `hardware/step/ASM_Elevator_System_v54.step` | Yes | Main neutral CAD file for reviewers who do not use Fusion 360. |
+| [ ] | `ASM_Elevator_System.step` | `hardware/step/ASM_Elevator_System_v54.step` | Yes | Main neutral CAD file for reviewers who do not use Fusion 360. Use Git LFS if larger than 25 MiB. |
 
 ## Step 3 — STEP exports by subsystem
 
