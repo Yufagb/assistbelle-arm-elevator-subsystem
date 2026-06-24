@@ -10,15 +10,15 @@ The complete machine-readable source table is available in [`hardwarex_elevator_
 
 | Metric | Value |
 |---|---:|
-| BOM item rows | 29 |
-| Estimated product total | USD 408.85 |
+| BOM item rows | 32 |
+| Estimated product total | USD 722.05 |
 | Currency | USD estimates |
 | Cost coverage | Product cost only |
 | Excluded costs | Shipping, customs, taxes and marketplace price changes |
 | Source workbook | `ASM_Elevator_System_HardwareX_BOM` |
-| Source tab | `BOM_Final_Clean` |
+| Source tab | `BOM_Final_Clean` + CAD electronics update |
 | Source CAD release | `ASM_Elevator_System.step` + `ASM_Elevator_System.f3z`, v54 |
-| Export date | 2026-06-23 |
+| Export/update date | 2026-06-23 |
 
 ## Category summary
 
@@ -28,7 +28,8 @@ The complete machine-readable source table is available in [`hardwarex_elevator_
 | Actuation | 6 | USD 139.34 |
 | Guiding | 3 | USD 98.19 |
 | Fasteners | 13 | USD 48.83 |
-| **Total** | **29** | **USD 408.85** |
+| Electronics | 3 | USD 313.20 |
+| **Total** | **32** | **USD 722.05** |
 
 ## Structure
 
@@ -78,6 +79,25 @@ The complete machine-readable source table is available in [`hardwarex_elevator_
 | `STD_FAS_012` | Pan head screw, McMaster 92000A220 | Standard hardware | 12 pcs | McMaster-Carr | USD 3.12 |
 | `STD_FAS_013` | Thread-forming screw, McMaster 99461A971 | Standard hardware | 4 pcs | McMaster-Carr | USD 0.32 |
 
+## Electronics
+
+| ID | Part | Type | Qty | Supplier | Total |
+|---|---|---|---:|---|---:|
+| `BUY_ELE_001` | Raspberry Pi 5 8GB + microSD | Purchased | 1 kit | Electromania / UTEC | USD 246.37 |
+| `BUY_ELE_002` | MCP2515 CAN-SPI module | Purchased | 1 pc | Electronica HI FI | USD 7.69 |
+| `BUY_ELE_003` | TB6600 stepper motor driver | Purchased | 2 pcs | Naylamp Mechatronics | USD 59.14 |
+
+## CAD naming guide
+
+Use BOM-aligned names in the Fusion 360 browser to keep CAD, BOM and documentation traceable:
+
+| Current CAD browser name | Recommended name |
+|---|---|
+| `RASPBERRY_PI_5_1 v2:1` | `BUY_ELE_001_RaspberryPi5_8GB_SBC` |
+| `MCP2515 CAN_SPI v2:1` | `BUY_ELE_002_MCP2515_CAN_SPI_Module` |
+| `TB6600(AP203) v1:1` | `BUY_ELE_003_TB6600_Stepper_Driver_J5_MotorA` |
+| `TB6600(AP203) v1:2` | `BUY_ELE_003_TB6600_Stepper_Driver_J5_MotorB` |
+
 ## Source and supplier notes
 
 - Exact sourcing links and alternative/local supplier links are preserved in the CSV file.
@@ -85,6 +105,7 @@ The complete machine-readable source table is available in [`hardwarex_elevator_
 - Internal V-wheel CAD subparts are excluded to avoid double counting.
 - McMaster-Carr part numbers are retained for CAD-coded standard fasteners.
 - Fabricated part costs are prototype estimates and should be verified before final replication.
+- Electronics lines `BUY_ELE_001` to `BUY_ELE_003` were added after the CAD update showing the Raspberry Pi 5, MCP2515 CAN-SPI module and two TB6600 drivers.
 
 ## Publication notes
 
@@ -92,5 +113,6 @@ Before final HardwareX submission:
 
 - Confirm stock, shipping and pack sizes for all supplier links.
 - Re-check CAD-derived fastener quantities, especially `STD_FAS_010` and `STD_FAS_011`.
+- Confirm whether the two TB6600 drivers correspond to left/right or Motor A/Motor B in the final wiring diagram.
 - Keep private receipts, reimbursement files and raw order screenshots outside the public repository unless redacted.
 - If the Google Sheet changes, re-export the CSV and regenerate this Markdown summary.
