@@ -124,7 +124,7 @@ Legacy folders from the development repository, such as `Codigo_esp32/` or `resu
 | ESP32 pinouts | Documented | [`electronics/pinout_tables/esp32_pinout_table.md`](electronics/pinout_tables/esp32_pinout_table.md) |
 | Raspberry Pi + MCP2515 | Documented and included in BOM/CAD | [`electronics/pinout_tables/raspberry_pi_mcp2515.md`](electronics/pinout_tables/raspberry_pi_mcp2515.md), [`docs/bom/hardwarex_elevator_bom_final.md`](docs/bom/hardwarex_elevator_bom_final.md) |
 | CAN protocol | Documented | [`firmware/can_protocol/can_messages.md`](firmware/can_protocol/can_messages.md) |
-| BOM | Updated for elevator CAD v54 including CAD electronics | [`docs/bom/hardwarex_elevator_bom_final.md`](docs/bom/hardwarex_elevator_bom_final.md), [`docs/bom/hardwarex_elevator_bom_final.csv`](docs/bom/hardwarex_elevator_bom_final.csv) |
+| BOM | Updated for elevator CAD v54 and synchronized with Google Sheet | [`docs/bom/hardwarex_elevator_bom_final.md`](docs/bom/hardwarex_elevator_bom_final.md), [`docs/bom/hardwarex_elevator_bom_final.csv`](docs/bom/hardwarex_elevator_bom_final.csv) |
 | Schematics | In progress | [`electronics/schematics/`](electronics/schematics/) |
 | Validation | Structure ready | [`validation/validation_plan.md`](validation/validation_plan.md) |
 | Mechanical CAD / STEP / STL | Pending | [`hardware/`](hardware/) |
@@ -246,11 +246,12 @@ Current BOM snapshot:
 
 - 32 BOM item rows + 1 estimated-total row.
 - Source workbook: `ASM_Elevator_System_HardwareX_BOM`.
-- Source tab: `BOM_Final_Clean` plus CAD electronics update.
+- Source tab: `BOM_Final_Clean`.
 - Associated CAD release: `ASM_Elevator_System.step` + `ASM_Elevator_System.f3z`, v54.
 - Included CAD electronics: Raspberry Pi 5, MCP2515 CAN-SPI module and two TB6600 drivers.
-- Estimated product total: **USD 722.05**.
+- Estimated product/material total: **USD 484.78**.
 - Shipping, customs, taxes and marketplace price changes are excluded.
+- Raspberry Pi 5 exact seller/product is still pending confirmation.
 
 The previous [`docs/bom_template.csv`](docs/bom_template.csv) is retained as a historical Spanish/PEN reference and should not be treated as the main HardwareX elevator BOM.
 
