@@ -122,9 +122,9 @@ Legacy folders from the development repository, such as `Codigo_esp32/` or `resu
 | ESP32 firmware J5 / TB6600 | Locally compiled | [`firmware/esp32_stepper_node/J5_tb6600/`](firmware/esp32_stepper_node/J5_tb6600/) |
 | ROS 2 / CAN bridge | Builds and starts with `vcan` | [`ros2_ws/`](ros2_ws/), [`docs/ros2_entrypoints_validation.md`](docs/ros2_entrypoints_validation.md) |
 | ESP32 pinouts | Documented | [`electronics/pinout_tables/esp32_pinout_table.md`](electronics/pinout_tables/esp32_pinout_table.md) |
-| Raspberry Pi + MCP2515 | Documented | [`electronics/pinout_tables/raspberry_pi_mcp2515.md`](electronics/pinout_tables/raspberry_pi_mcp2515.md) |
+| Raspberry Pi + MCP2515 | Documented and included in BOM/CAD | [`electronics/pinout_tables/raspberry_pi_mcp2515.md`](electronics/pinout_tables/raspberry_pi_mcp2515.md), [`docs/bom/hardwarex_elevator_bom_final.md`](docs/bom/hardwarex_elevator_bom_final.md) |
 | CAN protocol | Documented | [`firmware/can_protocol/can_messages.md`](firmware/can_protocol/can_messages.md) |
-| BOM | Updated for elevator CAD v54 | [`docs/bom/hardwarex_elevator_bom_final.md`](docs/bom/hardwarex_elevator_bom_final.md), [`docs/bom/hardwarex_elevator_bom_final.csv`](docs/bom/hardwarex_elevator_bom_final.csv) |
+| BOM | Updated for elevator CAD v54 including CAD electronics | [`docs/bom/hardwarex_elevator_bom_final.md`](docs/bom/hardwarex_elevator_bom_final.md), [`docs/bom/hardwarex_elevator_bom_final.csv`](docs/bom/hardwarex_elevator_bom_final.csv) |
 | Schematics | In progress | [`electronics/schematics/`](electronics/schematics/) |
 | Validation | Structure ready | [`validation/validation_plan.md`](validation/validation_plan.md) |
 | Mechanical CAD / STEP / STL | Pending | [`hardware/`](hardware/) |
@@ -244,11 +244,12 @@ docs/bom/hardwarex_elevator_bom_final.csv
 
 Current BOM snapshot:
 
-- 29 BOM item rows + 1 estimated-total row.
+- 32 BOM item rows + 1 estimated-total row.
 - Source workbook: `ASM_Elevator_System_HardwareX_BOM`.
-- Source tab: `BOM_Final_Clean`.
+- Source tab: `BOM_Final_Clean` plus CAD electronics update.
 - Associated CAD release: `ASM_Elevator_System.step` + `ASM_Elevator_System.f3z`, v54.
-- Estimated product total: **USD 408.85**.
+- Included CAD electronics: Raspberry Pi 5, MCP2515 CAN-SPI module and two TB6600 drivers.
+- Estimated product total: **USD 722.05**.
 - Shipping, customs, taxes and marketplace price changes are excluded.
 
 The previous [`docs/bom_template.csv`](docs/bom_template.csv) is retained as a historical Spanish/PEN reference and should not be treated as the main HardwareX elevator BOM.
