@@ -16,7 +16,7 @@ El repositorio ya tiene una estructura ordenada para publicación tipo HardwareX
 
 El firmware ESP32 J1-J5 compila localmente. ROS 2 compila localmente para `can_comm_pkg`, y `can_node` inicia con una interfaz `can0` virtual usando SocketCAN/vcan.
 
-La BOM activa fue actualizada, retirando componentes no usados y separando drivers finales: DRV8871 para motores DC y TB6600 para NEMA/J5.
+La BOM HardwareX del elevador fue actualizada desde el Google Sheet `ASM_Elevator_System_HardwareX_BOM`, pestaña `BOM_Final_Clean`, asociada al CAD v54. La BOM anterior `docs/bom_template.csv` se conserva como referencia histórica/continuidad, pero la BOM limpia para publicación del elevador está en `docs/bom/hardwarex_elevator_bom_final.csv`.
 
 ## Estado por área
 
@@ -32,7 +32,7 @@ La BOM activa fue actualizada, retirando componentes no usados y separando drive
 | Esquemáticos | En proceso de cierre | [`../electronics/schematics/schematics_index.md`](../electronics/schematics/schematics_index.md) |
 | Protocolo CAN | Documentado | [`../firmware/can_protocol/can_messages.md`](../firmware/can_protocol/can_messages.md) |
 | ROS 2 | Compila e inicia con vcan | Falta probar todos los entry points. |
-| BOM | Inicial completa | [`bom_template.csv`](bom_template.csv), 38 líneas activas. |
+| BOM | Actualizada para elevador v54 | [`bom/hardwarex_elevator_bom_final.csv`](bom/hardwarex_elevator_bom_final.csv), 29 ítems + total estimado. |
 | Licencia/citación | Inicial listo | [`../LICENSE`](../LICENSE), [`../CITATION.cff`](../CITATION.cff) |
 | CAD/STEP/STL | Pendiente crítico | Falta contenido mecánico final. |
 | Validación | Estructura lista | Falta copiar/enlazar evidencias. |
@@ -40,20 +40,29 @@ La BOM activa fue actualizada, retirando componentes no usados y separando drive
 
 ## BOM activa
 
-La BOM activa está en:
+La BOM limpia para publicación HardwareX del elevador está en:
 
 ```text
-docs/bom_template.csv
+docs/bom/hardwarex_elevator_bom_final.csv
+```
+
+Trazabilidad de la BOM:
+
+```text
+docs/bom/README.md
 ```
 
 Resumen actual:
 
-- 38 líneas de materiales/componentes.
-- Componentes no usados retirados: Astra/Astra Plus, batería LiPo, tablet y DRV8825.
-- Drivers finales: DRV8871 para motores DC y TB6600 para NEMA/J5.
-- Costo total preliminar activo: S/ 4,328.63.
+- 29 ítems de BOM + 1 fila de total estimado.
+- Fuente: Google Sheet `ASM_Elevator_System_HardwareX_BOM`, tab `BOM_Final_Clean`.
+- CAD asociado en la fuente: `ASM_Elevator_System.step` + `ASM_Elevator_System.f3z`, release v54.
+- Moneda: USD estimados.
+- Total estimado de producto: USD 408.85.
+- No incluye envío, aduanas, impuestos ni cambios de precio de marketplace.
+- `docs/bom_template.csv` se conserva solo como referencia anterior en formato español/PEN.
 
-El costo estimado es preliminar y debe revisarse antes de publicación.
+El costo estimado es preliminar y debe revisarse antes de publicación/compra final.
 
 ## Pendientes inmediatos
 
@@ -78,6 +87,7 @@ git ls-files | grep -E '(^|/)(build|install|log|\.idea|\.vscode)(/|$)'
 4. Completar fotos y tabla final de conectores en electrónica.
 5. Completar CAD/STEP/STL en `hardware/`.
 6. Curar videos y datos hacia `validation/`.
+7. Re-exportar `docs/bom/hardwarex_elevator_bom_final.csv` si cambia el Google Sheet fuente.
 
 ## Criterio de cierre para HardwareX
 
