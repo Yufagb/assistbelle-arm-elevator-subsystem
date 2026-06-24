@@ -16,14 +16,14 @@ El repositorio ya tiene una estructura ordenada para publicación tipo HardwareX
 
 El firmware ESP32 J1-J5 compila localmente. ROS 2 compila localmente para `can_comm_pkg`, y `can_node` inicia con una interfaz `can0` virtual usando SocketCAN/vcan.
 
-La BOM HardwareX del elevador fue actualizada desde el Google Sheet `ASM_Elevator_System_HardwareX_BOM`, pestaña `BOM_Final_Clean`, asociada al CAD v54, y luego ampliada con los componentes electrónicos visibles en la actualización CAD: Raspberry Pi 5, MCP2515 CAN-SPI y dos drivers TB6600. La BOM anterior `docs/bom_template.csv` se conserva como referencia histórica/continuidad, pero la BOM limpia para publicación del elevador está en `docs/bom/hardwarex_elevator_bom_final.csv`.
+La BOM HardwareX del elevador fue sincronizada con el Google Sheet `ASM_Elevator_System_HardwareX_BOM`, pestaña `BOM_Final_Clean`, asociada al CAD v54. Incluye estructura, actuación, guías, fasteners y electrónica CAD: Raspberry Pi 5, MCP2515 CAN-SPI y dos drivers TB6600. La BOM anterior `docs/bom_template.csv` se conserva como referencia histórica/continuidad, pero la BOM limpia para publicación del elevador está en `docs/bom/hardwarex_elevator_bom_final.csv`.
 
 ## Estado por área
 
 | Área | Estado | Observación |
 |---|---|---|
 | Estructura del repo | Avanzada | Ver [`repository_structure.md`](repository_structure.md). |
-| README principal | Avanzado | Con navegación interna, BOM v54 actualizada y enlaces funcionales. |
+| README principal | Avanzado | Con navegación interna, BOM v54 sincronizada y enlaces funcionales. |
 | Firmware J1-J4 | Compila localmente | [`../firmware/esp32_joint_node/`](../firmware/esp32_joint_node/) |
 | Firmware J5 | Compila localmente | [`../firmware/esp32_stepper_node/J5_tb6600/`](../firmware/esp32_stepper_node/J5_tb6600/) |
 | Pinout ESP32 | Documentado | [`../electronics/pinout_tables/esp32_pinout_table.md`](../electronics/pinout_tables/esp32_pinout_table.md) |
@@ -32,7 +32,7 @@ La BOM HardwareX del elevador fue actualizada desde el Google Sheet `ASM_Elevato
 | Esquemáticos | En proceso de cierre | [`../electronics/schematics/schematics_index.md`](../electronics/schematics/schematics_index.md) |
 | Protocolo CAN | Documentado | [`../firmware/can_protocol/can_messages.md`](../firmware/can_protocol/can_messages.md) |
 | ROS 2 | Compila e inicia con vcan | Falta probar todos los entry points. |
-| BOM | Actualizada para elevador v54 + electrónica CAD | [`bom/hardwarex_elevator_bom_final.md`](bom/hardwarex_elevator_bom_final.md), 32 ítems + total estimado. |
+| BOM | Sincronizada con Google Sheet / CAD v54 | [`bom/hardwarex_elevator_bom_final.md`](bom/hardwarex_elevator_bom_final.md), 32 ítems + total estimado. |
 | Licencia/citación | Inicial listo | [`../LICENSE`](../LICENSE), [`../CITATION.cff`](../CITATION.cff) |
 | CAD/STEP/STL | Pendiente crítico | Falta contenido mecánico final. |
 | Validación | Estructura lista | Falta copiar/enlazar evidencias. |
@@ -61,12 +61,12 @@ docs/bom/README.md
 Resumen actual:
 
 - 32 ítems de BOM + 1 fila de total estimado.
-- Fuente inicial: Google Sheet `ASM_Elevator_System_HardwareX_BOM`, tab `BOM_Final_Clean`.
-- Actualización CAD adicional: Raspberry Pi 5, MCP2515 CAN-SPI y dos drivers TB6600.
+- Fuente: Google Sheet `ASM_Elevator_System_HardwareX_BOM`, tab `BOM_Final_Clean`.
 - CAD asociado en la fuente: `ASM_Elevator_System.step` + `ASM_Elevator_System.f3z`, release v54.
 - Moneda: USD estimados.
-- Total estimado de producto: USD 722.05.
+- Total estimado de producto/material: USD 484.78.
 - No incluye envío, aduanas, impuestos ni cambios de precio de marketplace.
+- Raspberry Pi 5 conserva costo estimado hasta confirmar vendedor/producto exacto.
 - `docs/bom_template.csv` se conserva solo como referencia anterior en formato español/PEN.
 
 El costo estimado es preliminar y debe revisarse antes de publicación/compra final.
