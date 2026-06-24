@@ -22,7 +22,8 @@ Do **not** upload raw receipts, card statements, full order screenshots or reimb
 | [`usage_reconciliation.md`](usage_reconciliation.md) | Active/legacy/to-reconcile classification from purchases, schematics, firmware, current docs and user build confirmations. | Updated; photos and exact placement evidence pending. |
 | [`../../hardware/fasteners/structural_profiles_table.csv`](../../hardware/fasteners/structural_profiles_table.csv) | V-slot/profile/bracket/fastener reconciliation table. | Updated with user-confirmed active V-slot, brackets, Dual V wheels and threaded rod. |
 | [`../bom_template.csv`](../bom_template.csv) | Earlier active public BOM in Spanish/PEN format. | Retained for continuity; use the new HardwareX elevator BOM for the v54 elevator package. |
-| [`../bom/hardwarex_elevator_bom_final.csv`](../bom/hardwarex_elevator_bom_final.csv) | Clean HardwareX elevator BOM exported from the project Google Sheet. | Current v54 BOM snapshot, sourced from `ASM_Elevator_System_HardwareX_BOM` / `BOM_Final_Clean`. |
+| [`../bom/hardwarex_elevator_bom_final.csv`](../bom/hardwarex_elevator_bom_final.csv) | Clean HardwareX elevator BOM synchronized from the project Google Sheet. | Current v54 BOM snapshot, sourced from `ASM_Elevator_System_HardwareX_BOM` / `BOM_Final_Clean`. |
+| [`../bom/hardwarex_elevator_bom_final.md`](../bom/hardwarex_elevator_bom_final.md) | Human-readable BOM summary for GitHub reviewers. | Current. |
 | [`../bom/README.md`](../bom/README.md) | BOM source, counting rules and export traceability. | Current. |
 
 ## Sources reviewed
@@ -54,9 +55,10 @@ Do **not** upload raw receipts, card statements, full order screenshots or reimb
 | Source workbook | `ASM_Elevator_System_HardwareX_BOM` |
 | Source tab | `BOM_Final_Clean` |
 | CAD release noted by workbook | `v54` |
-| Exported BOM rows | 29 item rows + 1 estimated-total row |
-| Estimated product total | USD 408.85 |
+| Exported BOM rows | 32 item rows + 1 estimated-total row |
+| Estimated product/material total | USD 484.78 |
 | Cost exclusions | Shipping, customs, taxes and marketplace price changes |
+| Remaining sourcing note | Raspberry Pi 5 exact seller/product still pending confirmation. |
 
 ## Active vs legacy handling
 
@@ -91,5 +93,6 @@ Before freezing the HardwareX BOM:
 - Final split of bundled purchases into individual BOM lines when more precision is required.
 - Photo/placement evidence for V-slot 2040, V-slot 2020, brackets, Dual V wheels and threaded rod.
 - Photo evidence and final pin mapping for J2/J3 IBT-2 modules.
+- Exact Raspberry Pi 5 selected seller/product link.
 - Public photos/evidence in `electronics/images/` and `hardware/photos/`.
 - Re-export `docs/bom/hardwarex_elevator_bom_final.csv` whenever the Google Sheet source changes.
