@@ -25,11 +25,11 @@ Subsystem STEP exports are optional for the current working snapshot but recomme
 | `step/ASM_Elevator_Guide_VWheels_v60.step` | Pending / optional | Dual V-wheel guide path and wheel assemblies. |
 | `step/ASM_Elevator_Electronics_Mounting_v60.step` | Pending / optional | Raspberry Pi, MCP2515 and TB6600 placement if electronics mounting is part of the CAD. |
 
-## Pending STL exports for fabricated/printed parts
+## STL exports for fabricated/printed parts
 
 | BOM ID | Target file | Status | Notes |
 |---|---|---|---|
-| `FAB_ACT_002` | `stl/FAB_ACT_002_NEMA23_Mounting_Plate_ABS_v60.stl` | Pending | Required if the mounting plate is 3D printed/custom fabricated. |
+| `FAB_ACT_002` | [`stl/FAB_ACT_002_NEMA23_Mounting_Plate_ABS_v60.stl`](stl/FAB_ACT_002_NEMA23_Mounting_Plate_ABS_v60.stl) | Uploaded via Git LFS | NEMA 23 mounting plate STL for the current v60 snapshot. |
 | `FAB_GUI_002` | `stl/FAB_GUI_002_Spacer_Block_ABS_Gray_v60.stl` | Pending | Required if the spacer block is 3D printed/custom fabricated. |
 
 ## Pending drawings / fabrication files
