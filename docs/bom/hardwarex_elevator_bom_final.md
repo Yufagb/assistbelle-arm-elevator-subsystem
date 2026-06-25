@@ -18,7 +18,7 @@ The complete machine-readable source table is available in [`hardwarex_elevator_
 | Excluded costs | Shipping, customs, taxes and marketplace price changes |
 | Source workbook | `ASM_Elevator_System_HardwareX_BOM` |
 | Source tab | `BOM_Final_Clean` |
-| Source CAD release | `ASM_Elevator_System.step` + `ASM_Elevator_System.f3z`, v54 |
+| Source CAD release | `ASM_Elevator_System.step` + `ASM_Elevator_System.f3z`, v54 source sheet; current uploaded CAD working snapshot is v60 |
 | Export/update date | 2026-06-23 |
 
 ## Category summary
@@ -59,7 +59,7 @@ The complete machine-readable source table is available in [`hardwarex_elevator_
 | ID | Part | Type | Qty | Material | Supplier | Total |
 |---|---|---|---:|---|---|---:|
 | `BUY_GUI_003` | V-wheel kit with bearings | Purchased | 8 pcs | Polycarbonate wheel + 625RS bearings | AliExpress - BULK-MAN 3D Official Store | USD 13.38 |
-| `FAB_GUI_001` | Gantry plate, 20 x 80 mm | Fabricated | 4 pcs | Stainless steel | Local fabrication | USD 59.00 |
+| `FAB_GUI_001` | Gantry plate, 127 x 88 x 3 mm | Fabricated | 4 pcs | Stainless steel | Local fabrication | USD 59.00 |
 | `FAB_GUI_002` | Spacer block | Fabricated | 4 pcs | ABS, gray | Local fabrication | USD 5.92 |
 
 ## Fasteners
@@ -106,6 +106,7 @@ Use BOM-aligned names in the Fusion 360 browser to keep CAD, BOM and documentati
 - Internal V-wheel CAD subparts are excluded to avoid double counting.
 - McMaster-Carr part numbers are retained for CAD-coded standard fasteners.
 - Fabricated part costs are prototype estimates and should be verified before final replication.
+- `FAB_GUI_001` dimensions were updated to 127 x 88 x 3 mm from the current v60 CAD/drawing; the previous 20 x 80 mm description should be treated as outdated.
 - Electronics lines `BUY_ELE_001` to `BUY_ELE_003` include the Raspberry Pi 5, MCP2515 CAN-SPI module and two TB6600 drivers shown in the CAD update.
 - Raspberry Pi 5 cost is still an estimate until the exact seller/product screenshot is confirmed.
 
