@@ -4,7 +4,7 @@ package_name = 'video_streamer'
 
 setup(
     name=package_name,
-    version='0.0.0',
+    version='0.1.0',
     packages=find_packages(exclude=['test']),
     data_files=[
         ('share/ament_index/resource_index/packages',
@@ -13,10 +13,10 @@ setup(
     ],
     install_requires=['setuptools'],
     zip_safe=True,
-    maintainer='rosario',
-    maintainer_email='rosario@todo.todo',
-    description='Stream de vídeo con FPS configurable',
-    license='Apache License 2.0',
+    maintainer='Yuri Fabian Vilela Obando',
+    maintainer_email='yuri.vilela@utec.edu.pe',
+    description='ROS 2 video streaming utilities for the Assistbelle project.',
+    license='Apache-2.0',
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
