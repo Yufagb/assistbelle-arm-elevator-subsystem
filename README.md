@@ -100,6 +100,7 @@ Legacy folders from the development repository, such as `Codigo_esp32/` or `resu
 | [`docs/README.md`](docs/README.md) | Documentation index. |
 | [`docs/project_status.md`](docs/project_status.md) | Current project status and immediate pending items. |
 | [`docs/repository_audit.md`](docs/repository_audit.md) | Repository audit and closure criteria. |
+| [`docs/repo_cleanup_audit.md`](docs/repo_cleanup_audit.md) | Cleanup audit, placeholder checks and local validation commands. |
 | [`docs/repository_structure.md`](docs/repository_structure.md) | Repository organization rules. |
 | [`docs/hardwarex_master_checklist.md`](docs/hardwarex_master_checklist.md) | Master checklist for HardwareX completion. |
 | [`docs/publication_checklist.md`](docs/publication_checklist.md) | Publication-oriented checklist. |
@@ -117,18 +118,18 @@ Legacy folders from the development repository, such as `Codigo_esp32/` or `resu
 
 | Area | Status | Reference |
 |---|---|---|
-| Repository organization | Advanced | [`docs/repository_structure.md`](docs/repository_structure.md) |
-| ESP32 firmware J1-J4 | Locally compiled | [`firmware/esp32_joint_node/`](firmware/esp32_joint_node/) |
-| ESP32 firmware J5 / TB6600 | Locally compiled | [`firmware/esp32_stepper_node/J5_tb6600/`](firmware/esp32_stepper_node/J5_tb6600/) |
-| ROS 2 / CAN bridge | Builds and starts with `vcan` | [`ros2_ws/`](ros2_ws/), [`docs/ros2_entrypoints_validation.md`](docs/ros2_entrypoints_validation.md) |
+| Repository organization | Advanced | [`docs/repository_structure.md`](docs/repository_structure.md), [`docs/repo_cleanup_audit.md`](docs/repo_cleanup_audit.md) |
+| ESP32 firmware J1-J4 | Included; previously compiled locally | [`firmware/esp32_joint_node/`](firmware/esp32_joint_node/) |
+| ESP32 firmware J5 / TB6600 | Included; CAN `B5` payload closeout pending physical validation | [`firmware/esp32_stepper_node/J5_tb6600/`](firmware/esp32_stepper_node/J5_tb6600/), [`firmware/can_protocol/can_messages.md`](firmware/can_protocol/can_messages.md) |
+| ROS 2 / CAN bridge | Builds and starts with `vcan`; clean-clone entry-point validation pending | [`ros2_ws/`](ros2_ws/), [`docs/ros2_entrypoints_validation.md`](docs/ros2_entrypoints_validation.md) |
 | ESP32 pinouts | Documented | [`electronics/pinout_tables/esp32_pinout_table.md`](electronics/pinout_tables/esp32_pinout_table.md) |
 | Raspberry Pi + MCP2515 | Documented and included in BOM/CAD | [`electronics/pinout_tables/raspberry_pi_mcp2515.md`](electronics/pinout_tables/raspberry_pi_mcp2515.md), [`docs/bom/hardwarex_elevator_bom_final.md`](docs/bom/hardwarex_elevator_bom_final.md) |
-| CAN protocol | Documented | [`firmware/can_protocol/can_messages.md`](firmware/can_protocol/can_messages.md) |
-| BOM | Updated for elevator CAD v54 and synchronized with Google Sheet | [`docs/bom/hardwarex_elevator_bom_final.md`](docs/bom/hardwarex_elevator_bom_final.md), [`docs/bom/hardwarex_elevator_bom_final.csv`](docs/bom/hardwarex_elevator_bom_final.csv) |
-| Schematics | In progress | [`electronics/schematics/`](electronics/schematics/) |
-| Validation | Structure ready | [`validation/validation_plan.md`](validation/validation_plan.md) |
-| Mechanical CAD / STEP / STL | Pending | [`hardware/`](hardware/) |
-| Paper material | Pending | [`paper/`](paper/) |
+| CAN protocol | Documented; J5 `C5` compatible and `B5` final decision pending | [`firmware/can_protocol/can_messages.md`](firmware/can_protocol/can_messages.md) |
+| BOM | Updated for the current elevator package: 32 item rows, estimated total USD 484.78 | [`docs/bom/hardwarex_elevator_bom_final.md`](docs/bom/hardwarex_elevator_bom_final.md), [`docs/bom/hardwarex_elevator_bom_final.csv`](docs/bom/hardwarex_elevator_bom_final.csv) |
+| Schematics/electronics | Documented in text; physical connector data/photos pending | [`electronics/`](electronics/), [`electronics/wiring_diagrams/connector_table.md`](electronics/wiring_diagrams/connector_table.md) |
+| Mechanical CAD / STEP / STL / drawings | Advanced for v60 working snapshot; prototype photos deferred | [`hardware/`](hardware/), [`hardware/design_files_index.md`](hardware/design_files_index.md) |
+| Paper material | Outline, tables, data availability and Mermaid figure drafts created | [`paper/`](paper/) |
+| Validation | Structure ready; curated media/CSV/plots pending | [`validation/validation_plan.md`](validation/validation_plan.md) |
 
 ## Firmware ESP32
 
@@ -193,11 +194,11 @@ electronics/
 └── wiring_diagrams/
 ```
 
-Current documentation includes ESP32 pinouts, Raspberry Pi + MCP2515 wiring, CAN/power bus notes, power-distribution notes and a schematics index. Final schematic exports, electronics photos and connector tables remain pending.
+Current documentation includes ESP32 pinouts, Raspberry Pi + MCP2515 wiring, CAN/power bus notes, power-distribution notes, a working connector table and a schematics index. Final schematic filenames/exports, electronics photos and physical connector details remain pending.
 
 ## Mechanical hardware
 
-Mechanical design files should be organized as:
+Mechanical design files are organized as:
 
 ```text
 hardware/
@@ -209,7 +210,9 @@ hardware/
 └── fasteners/
 ```
 
-Editable CAD, STEP/STL exports, drawings, fasteners and final mechanical photos remain pending.
+The current uploaded CAD package is the **v60 working snapshot** and includes editable Fusion 360 archive, full STEP export, STL files for custom fabricated/printed parts, PDF drawings and DXF cutting files. Physical prototype photos are deferred until the robot is accessible again.
+
+See [`hardware/design_files_index.md`](hardware/design_files_index.md) for the current file inventory.
 
 ## Validation
 
@@ -247,7 +250,7 @@ Current BOM snapshot:
 - 32 BOM item rows + 1 estimated-total row.
 - Source workbook: `ASM_Elevator_System_HardwareX_BOM`.
 - Source tab: `BOM_Final_Clean`.
-- Associated CAD release: `ASM_Elevator_System.step` + `ASM_Elevator_System.f3z`, v54.
+- Current uploaded CAD working snapshot: v60.
 - Included CAD electronics: Raspberry Pi 5, MCP2515 CAN-SPI module and two TB6600 drivers.
 - Estimated product/material total: **USD 484.78**.
 - Shipping, customs, taxes and marketplace price changes are excluded.
@@ -271,10 +274,11 @@ The root [`LICENSE`](LICENSE) file summarizes this policy. See [`docs/license_ov
 
 ## Remaining HardwareX closure items
 
-- [ ] Upload final mechanical CAD, STEP, STL, drawings and prototype photos.
 - [ ] Confirm final schematic filenames and exports.
-- [ ] Create final CAN and power-distribution diagrams.
-- [ ] Create a final connector table.
 - [ ] Add electronics photos.
+- [ ] Confirm physical connector pin order, wire colors and cable gauges.
+- [ ] Confirm TB6600 supply voltage and exact Dell PSU model.
+- [ ] Add physical prototype photos once the robot is accessible.
 - [ ] Validate all ROS 2 entry points from a clean clone.
 - [ ] Curate validation videos, CSV files and figures.
+- [ ] Freeze final CAD/BOM release and tag the GitHub release used by the manuscript.
