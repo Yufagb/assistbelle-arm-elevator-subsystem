@@ -2,6 +2,13 @@
 
 Checklist maestro para preparar el repositorio como paquete reproducible.
 
+Leyenda:
+
+- `[x]` completado
+- `[~]` parcial
+- `[ ]` pendiente
+- `[d]` diferido por falta de acceso físico al prototipo o por congelamiento final pendiente
+
 ## Índice
 
 - [A. Identidad del hardware](#a-identidad-del-hardware)
@@ -24,17 +31,19 @@ Checklist maestro para preparar el repositorio como paquete reproducible.
 
 ## B. Archivos mecánicos
 
-- [ ] CAD completo del robot.
-- [ ] CAD del brazo.
-- [ ] CAD del elevador.
-- [ ] CAD del gripper.
-- [ ] CAD de soportes y adaptadores.
-- [ ] STEP completo.
-- [ ] STEP por subconjunto.
-- [ ] STL de piezas imprimibles.
-- [ ] Planos con dimensiones.
-- [ ] Tabla de tornillos, rodamientos, perfiles y piezas estándar.
-- [ ] Fotos del prototipo.
+- [x] CAD completo del sistema elevador cargado: `hardware/cad/complete_robot/ASM_Elevator_System_v60.f3z`.
+- [~] CAD completo del robot/brazo: fuera del cierre actual del paquete elevador v60 o pendiente de congelar según alcance final.
+- [x] CAD del elevador cargado como snapshot de trabajo v60.
+- [~] CAD del brazo: pendiente si el release final incluye brazo completo en este repositorio.
+- [~] CAD del gripper: pendiente si el release final incluye gripper completo en este repositorio.
+- [x] CAD de soportes y adaptadores principales del elevador incluido dentro del ensamblaje v60.
+- [x] STEP completo cargado: `hardware/step/ASM_Elevator_System_v60.step`.
+- [d] STEP por subconjunto: opcional para snapshot v60; agregar antes de congelar release final si se requiere mayor navegabilidad.
+- [x] STL de piezas imprimibles/fabricadas cargado para las piezas identificadas en BOM v60.
+- [x] Planos con dimensiones cargados para base plate, top plate y gantry plate.
+- [x] DXF de fabricación cargado para top plate y gantry plate.
+- [~] Tabla de tornillos, rodamientos, perfiles y piezas estándar documentada en BOM/fasteners; falta verificación física final.
+- [d] Fotos del prototipo diferidas por falta de acceso físico al robot.
 
 ## C. Electrónica
 
@@ -102,6 +111,7 @@ Checklist maestro para preparar el repositorio como paquete reproducible.
 ## H. Limpieza final
 
 - [x] `.gitignore` reforzado para ROS 2 y ESP-IDF.
+- [x] `.gitattributes` configurado para Git LFS en CAD, STEP, STL, DXF y media pesada.
 - [x] `LICENSE` creado.
 - [x] `CITATION.cff` creado.
 - [ ] Verificar que no queden artefactos versionados en `build`, `install`, `log`, `.vscode` o `.idea`.
