@@ -19,7 +19,7 @@ Legend:
 - [x] Folder structure created: `docs/`, `electronics/`, `firmware/`, `hardware/`, `paper/`, `ros2_ws/`, `software/`, `validation/`.
 - [x] `.gitignore` reinforced for ROS 2, Python, ESP-IDF, build folders and IDE folders.
 - [x] Git LFS configured for large CAD, STEP, STL, DXF and media assets.
-- [ ] Confirm there are no tracked generated files: `build/`, `install/`, `log/`, `.idea/`, `.vscode/`.
+- [~] Confirm there are no tracked generated files: remote scan found no obvious generated folders; local `git ls-files` validation commands are documented in `docs/repo_cleanup_audit.md`.
 
 ## 2. Licensing and citation
 
@@ -131,7 +131,7 @@ Legend:
 
 ## 11. Final cleanup
 
-- [ ] Replace remaining placeholders.
+- [~] Replace remaining placeholders: obvious ROS package metadata placeholders were cleaned; broader TODO/FIXME review remains pending and is documented in `docs/repo_cleanup_audit.md`.
 - [ ] Check all links in root README and docs README.
 - [ ] Confirm public access to repository.
 - [ ] Confirm license policy is reflected in README, LICENSE and docs/license_overview.md.
