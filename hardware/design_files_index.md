@@ -39,8 +39,8 @@ Subsystem STEP exports are optional for the current working snapshot but recomme
 | `FAB_STR_001` | [`drawings/FAB_STR_001_Base_Plate_356x356x15_MDF_v60.pdf`](drawings/FAB_STR_001_Base_Plate_356x356x15_MDF_v60.pdf) | Uploaded | MDF base plate drawing with dimensions, material, units, tolerance and hole notes. |
 | `FAB_STR_002` | [`drawings/FAB_STR_002_Top_Plate_420x400x3_StainlessSteel_v60.pdf`](drawings/FAB_STR_002_Top_Plate_420x400x3_StainlessSteel_v60.pdf) | Uploaded | Stainless steel top plate drawing with dimensions, material, units, tolerance and hole notes. |
 | `FAB_GUI_001` | [`drawings/FAB_GUI_001_Gantry_Plate_127x88x3_StainlessSteel_v60.pdf`](drawings/FAB_GUI_001_Gantry_Plate_127x88x3_StainlessSteel_v60.pdf) | Uploaded | Stainless steel gantry plate drawing with dimensions, material, units, tolerance and hole notes. |
-| `FAB_STR_002` | `drawings/FAB_STR_002_Top_Plate_420x400x3_StainlessSteel_v60.dxf` | Recommended | DXF for laser/waterjet cutting if available. |
-| `FAB_GUI_001` | `drawings/FAB_GUI_001_Gantry_Plate_127x88x3_StainlessSteel_v60.dxf` | Recommended | DXF for laser/waterjet cutting if available. |
+| `FAB_STR_002` | [`drawings/FAB_STR_002_Top_Plate_420x400x3_StainlessSteel_v60.dxf`](drawings/FAB_STR_002_Top_Plate_420x400x3_StainlessSteel_v60.dxf) | Uploaded via Git LFS | DXF for laser/waterjet cutting. Check scale before fabrication. |
+| `FAB_GUI_001` | [`drawings/FAB_GUI_001_Gantry_Plate_127x88x3_StainlessSteel_v60.dxf`](drawings/FAB_GUI_001_Gantry_Plate_127x88x3_StainlessSteel_v60.dxf) | Uploaded via Git LFS | DXF for laser/waterjet cutting. Check scale before fabrication. |
 
 ## Deferred mechanical photos
 
