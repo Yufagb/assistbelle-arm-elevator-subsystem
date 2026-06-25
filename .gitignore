@@ -49,6 +49,11 @@ esp-idf/
 *.swp
 *.swo
 
+# Local backup files
+*.bak
+*.tmp
+*.orig
+
 # Environment and local logs
 .env*
 *.log
