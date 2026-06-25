@@ -110,12 +110,12 @@ Legend:
 - [x] Validation plan created.
 - [x] Media index created.
 - [x] Initial J5 motion summary created.
-- [ ] Curate videos into `validation/media/` or provide stable external links.
-- [ ] Curate final CSV files.
-- [ ] Generate final validation figures from curated CSVs.
+- [~] Curate videos into `validation/media/` or provide stable external links: full video set remains local and uncommitted due size; representative subset still pending.
+- [x] Curate final CSV/TXT data files: J1-J5 motion data and Tracker text exports uploaded in `validation/joint_motion_tests/raw/`.
+- [~] Generate final validation figures from curated CSVs: plots and Tracker figures uploaded; manuscript-ready summary figures still pending.
 - [ ] Document physical CAN validation.
 - [ ] Document pick-and-place validation.
-- [ ] Document perception validation.
+- [~] Document perception validation: perception figures uploaded; final narrative/video evidence still pending.
 
 ## 10. Manuscript material
 
