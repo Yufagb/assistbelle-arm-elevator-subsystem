@@ -38,12 +38,12 @@ ip link show can0
 | `can_cli` | Interfaz CLI para comandos CAN. | Pendiente de prueba local. |
 | `can_slider` | Interfaz con sliders para control articular. | Pendiente de prueba local. |
 | `can_traj` | Ejecución de trayectorias. | Pendiente de prueba local. |
-| `can_traj_trapezoid` | Ejecución de trayectoria trapezoidal. | Pendiente de prueba local. |
+| `can_traj_offline` | Generación/validación offline de trayectorias. | Pendiente de prueba local. |
 | `ik_node` | Nodo de cinemática inversa. | Pendiente de prueba local. |
 | `control_teclado` | Control por teclado. | Evidencia de video identificada. |
 | `control_teclado_trapezoidal` | Control por teclado con perfil trapezoidal. | Pendiente de prueba local. |
 | `barcode_detector` | Detección de códigos de barras. | Pendiente de prueba local. |
-| `product_identifier` | Identificación de producto. | Pendiente de prueba local. |
+| `product_identifier` | Identificación de producto. | Pendiente de clasificar como nodo ROS o helper standalone. |
 
 ## Rutina mínima de prueba
 
@@ -66,6 +66,7 @@ ros2 run can_comm_pkg control_teclado
 ## Pruebas de trayectoria J5
 
 ```bash
+ros2 run can_comm_pkg j5_step
 ros2 run can_comm_pkg j5_ramp
 ros2 run can_comm_pkg j5_trap
 ```
@@ -77,6 +78,23 @@ validation/media/j5_ramp_100mm_5reps.mp4
 validation/media/j5_trapezoidal_100mm_5reps.mp4
 validation/joint_motion_tests/j5_motion_summary.csv
 ```
+
+## Compatibilidad CAN J5
+
+La implementación ROS 2 actual usa el topic `can_command` y `can_node.py` para convertir strings como `C5:100.0` a una trama CAN `0xC5`.
+
+| Mensaje | ROS 2 actual | Firmware J5 actual | Compatibilidad |
+|---|---|---|---|
+| `C5` | Envía `float32` little-endian en mm. | Acepta `float32` little-endian en mm y también `int16` big-endian en mm. | Compatible para comando de posición. |
+| `A5` / `A6` | Solicitud sin payload. | Responde `B5`. | Compatible para solicitud. |
+| `B5` | Espera `float32 position` + `float32 velocity`. | Envía `float32 position_mm` + bytes reservados/status `04 00 00 80`. | Parcial: posición compatible, velocidad no cerrada. |
+
+Antes de la validación física final se debe cerrar una decisión:
+
+- actualizar firmware J5 para que `B5` envíe `position_mm` + `velocity_mm_s` como dos `float32` little-endian; o
+- modificar ROS 2 para tratar `B5` como caso especial con bytes 4..7 reservados.
+
+La opción recomendada es actualizar firmware J5 para responder `B5` con dos `float32`, usando `0.0f` como velocidad si no se mide velocidad lineal.
 
 ## Cierre de CAN virtual
 
@@ -92,4 +110,5 @@ El objetivo mínimo sin hardware físico es confirmar que:
 - `can_node` inicia con `can0` virtual;
 - los entry points existen;
 - los comandos no fallan por importaciones faltantes;
+- `C5` se genera en mm como `float32` little-endian;
 - los módulos principales quedan listos para prueba física posterior.
