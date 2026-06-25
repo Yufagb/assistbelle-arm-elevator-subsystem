@@ -16,7 +16,7 @@ setup(
     install_requires=['setuptools','rclpy','std_msgs','sensor_msgs','numpy'],
     zip_safe=True,
     maintainer='Yuri Fabian Vilela Obando',
-    maintainer_email='tu_email@ejemplo.com',
+    maintainer_email='yuri.vilela@utec.edu.pe',
     description='CAN communication package (ROS 2)',
     license='Apache-2.0',
     tests_require=['pytest'],
