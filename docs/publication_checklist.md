@@ -9,6 +9,7 @@ Legend:
 - `[x]` done
 - `[~]` partial
 - `[ ]` pending
+- `[d]` deferred / blocked by unavailable physical prototype or final release freeze
 
 ## 1. Repository organization
 
@@ -17,6 +18,7 @@ Legend:
 - [x] Root README reorganized for HardwareX.
 - [x] Folder structure created: `docs/`, `electronics/`, `firmware/`, `hardware/`, `paper/`, `ros2_ws/`, `software/`, `validation/`.
 - [x] `.gitignore` reinforced for ROS 2, Python, ESP-IDF, build folders and IDE folders.
+- [x] Git LFS configured for large CAD, STEP, STL, DXF and media assets.
 - [ ] Confirm there are no tracked generated files: `build/`, `install/`, `log/`, `.idea/`, `.vscode/`.
 
 ## 2. Licensing and citation
@@ -31,13 +33,15 @@ Legend:
 
 ## 3. Mechanical hardware
 
-- [ ] Upload editable CAD files.
-- [ ] Upload STEP exports.
-- [ ] Upload STL exports for printable parts.
-- [ ] Upload drawings with dimensions.
-- [ ] Add photos of the assembled arm, elevator and gripper.
-- [ ] Complete fasteners table: screws, nuts, bearings, profiles and standard parts.
-- [ ] Confirm mechanical files are covered by CERN-OHL-S v2.0.
+- [x] Upload editable CAD files: `hardware/cad/complete_robot/ASM_Elevator_System_v60.f3z`.
+- [x] Upload full STEP export: `hardware/step/ASM_Elevator_System_v60.step`.
+- [x] Upload STL exports for printable/fabricated parts currently identified in the elevator BOM.
+- [x] Upload drawings with dimensions for fabricated plates.
+- [x] Upload DXF fabrication files for stainless-steel cut plates.
+- [~] Complete fasteners table: screws, nuts, bearings, profiles and standard parts are represented in BOM/fastener docs; final physical cross-check remains pending.
+- [x] Confirm mechanical files are covered by CERN-OHL-S v2.0 through repository license policy.
+- [d] Add photos of the assembled elevator/mechanical subsystem once the physical robot is accessible again.
+- [d] STEP exports by subsystem are optional for the current v60 working snapshot and can be added before final release freeze.
 
 ## 4. Electronics
 
@@ -77,13 +81,16 @@ Legend:
 
 ## 7. BOM
 
-- [x] BOM CSV created at `docs/bom_template.csv`.
-- [x] Removed unused components: Astra/Astra Plus, LiPo, tablet and DRV8825.
-- [x] DRV8871 and TB6600 differentiated.
-- [x] Current preliminary total documented: S/ 4,328.63.
-- [ ] Separate installed components from tools/lab equipment if required by HardwareX.
-- [ ] Confirm final suppliers and alternatives.
-- [ ] Confirm final quantities after CAD/mechanical closure.
+- [x] Clean HardwareX elevator BOM exported to `docs/bom/hardwarex_elevator_bom_final.csv`.
+- [x] Human-readable BOM summary created at `docs/bom/hardwarex_elevator_bom_final.md`.
+- [x] BOM synchronized with the current CAD/BOM review: 32 item rows + one estimated-total row.
+- [x] Current estimated product/material total documented: USD 484.78.
+- [x] Removed unused/legacy components from the active BOM scope: Astra/Astra Plus, LiPo, tablet and DRV8825.
+- [x] DRV8871, IBT-2/BTS7960 and TB6600 differentiated in procurement and electronics documentation.
+- [x] `FAB_GUI_001` updated to `Gantry plate, 127 x 88 x 3 mm` based on v60 CAD/drawing.
+- [~] Separate installed components from tools/lab equipment if required by HardwareX.
+- [~] Confirm final suppliers and alternatives; Raspberry Pi 5 exact seller/product remains pending.
+- [~] Confirm final quantities after final CAD/mechanical freeze.
 
 ## 8. Manuals
 
