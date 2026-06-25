@@ -2,7 +2,7 @@
 
 # Main bus wiring diagram
 
-This document describes the main power and CAN bus of the Assistbelle robotic arm and elevator subsystem based on the reviewed `Main Bus.pdf` schematic.
+This document describes the main power and CAN bus of the Assistbelle robotic arm and elevator subsystem based on the reviewed `Main Bus.pdf` schematic and current user-confirmed design intent.
 
 ## Source schematic
 
@@ -16,9 +16,9 @@ The main bus distributes power and communication through six labeled lines.
 
 | Line | Function | Domain | Notes |
 |---|---|---|---|
-| `12V` | Actuator power rail. | Power | Feeds motor drivers and actuator-side loads. |
+| `12V` | Actuator power rail. | Power | Feeds motor drivers and actuator-side loads. Interrupted by the panic button according to current design intent. |
 | `P_GND` | Power ground. | Power | Return path for actuator/motor power. |
-| `5V` | Logic power rail. | Signal / logic | Feeds Raspberry Pi, ESP32 nodes and CAN-related logic. |
+| `5V` | Logic power rail. | Signal / logic | Feeds Raspberry Pi, ESP32 nodes and CAN-related logic. Remains powered during panic-button activation according to current design intent. |
 | `S_GND` | Signal ground. | Signal / logic | Reference for logic, CAN transceivers and telemetry electronics. |
 | `CANH` | CAN high differential line. | Communication | Pair with CANL. |
 | `CANL` | CAN low differential line. | Communication | Pair with CANH. |
@@ -32,11 +32,11 @@ The current documentation treats `P_GND` and `S_GND` as separated domains. Their
 | `POWER_SUPPLIES` | `12V_PSU` | 2 | `12V`, `P_GND` | Main actuator-supply input. | Wiring and Dell PSU model pending. |
 | `POWER_SUPPLIES` | `5V_PSU` | 2 | `5V`, `S_GND` | Logic-supply input from DC-DC converter. | Wiring and converter placement pending. |
 | `RPI_CONNECTIONS` | `MCP_2515` | 2 | `CANH`, `CANL` | CAN branch to the Raspberry Pi/MCP2515 interface. | Pin order pending. |
-| `RPI_CONNECTIONS` | `RPI_POWER` | 2 | `5V`, `S_GND` | Logic power branch for Raspberry Pi side. | Physical wiring pending. |
-| `DC_MOTOR_CONTROLLER_X4` | `DCM_MOTOR_POWER` | 2 | `12V`, `P_GND` | Actuator power for four DC motor-controller branches. | Physical branching pending. |
-| `DC_MOTOR_CONTROLLER_X4` | `DCM_LOGIC_POWER` | 2 | `5V`, `S_GND` | Logic power for DC motor-controller nodes. | Physical branching pending. |
+| `RPI_CONNECTIONS` | `RPI_POWER` | 2 | `5V`, `S_GND` | Logic power branch for Raspberry Pi side. | Current design intent: remains powered during panic-button activation. |
+| `DC_MOTOR_CONTROLLER_X4` | `DCM_MOTOR_POWER` | 2 | `12V`, `P_GND` | Actuator power for four DC motor-controller branches. | Current design intent: interrupted by panic button. |
+| `DC_MOTOR_CONTROLLER_X4` | `DCM_LOGIC_POWER` | 2 | `5V`, `S_GND` | Logic power for DC motor-controller nodes. | Current design intent: remains powered during panic-button activation. |
 | `DC_MOTOR_CONTROLLER_X4` | `DCM_CAN_SN65H` | 2 | `CANH`, `CANL` | CAN branch for DC motor-controller transceivers. | Physical branching pending. |
-| `STEPPER_MOTOR_CONTROLLER` | `STPR_LOGIC_POWER` | 2 | `5V`, `S_GND` | Logic power for the J5/elevator controller. | Physical wiring pending. |
+| `STEPPER_MOTOR_CONTROLLER` | `STPR_LOGIC_POWER` | 2 | `5V`, `S_GND` | Logic power for the J5/elevator controller. | Current design intent: remains powered during panic-button activation. |
 | `STEPPER_MOTOR_CONTROLLER` | `STPR_CAN_SN65H` | 2 | `CANH`, `CANL` | CAN branch for the J5/elevator controller. | Physical wiring pending. |
 
 ## CAN termination
@@ -45,14 +45,26 @@ The reviewed schematic shows two 120-ohm CAN termination resistors:
 
 | Reference | Value | Location in schematic | Physical status |
 |---|---:|---|---|
-| `RT1` | 120 ohm | One end of the CAN bus, between `CANH` and `CANL`. | To verify physically. |
-| `RT2` | 120 ohm | Opposite end of the CAN bus, between `CANH` and `CANL`. | To verify physically. |
+| `RT1` | 120 ohm | One end of the CAN bus, between `CANH` and `CANL`. | Planned by design; physical location to verify. |
+| `RT2` | 120 ohm | Opposite end of the CAN bus, between `CANH` and `CANL`. | Planned by design; physical location to verify. |
 
 Implementation rule:
 
 - place one 120-ohm termination between `CANH` and `CANL` at the beginning of the bus;
 - place one 120-ohm termination between `CANH` and `CANL` at the end of the bus;
 - avoid additional intermediate terminations on branch nodes unless the physical bus topology requires a documented change.
+
+## J5 dual-driver design intent
+
+The elevator uses two TB6600 stepper drivers for two NEMA 23 motors. The current user-confirmed design intent is that both TB6600 drivers receive the same ESP32 control signals in parallel:
+
+| ESP32 signal | GPIO | Destination |
+|---|---:|---|
+| `PUL` | GPIO5 | TB6600 Motor A `PUL` and TB6600 Motor B `PUL` |
+| `DIR` | GPIO18 | TB6600 Motor A `DIR` and TB6600 Motor B `DIR` |
+| `ENA` | GPIO19 | TB6600 Motor A `ENA` and TB6600 Motor B `ENA` |
+
+The supply voltage used by the two TB6600 drivers is still pending physical inspection.
 
 ## Relationship with the current power architecture
 
@@ -83,6 +95,7 @@ These notes should be verified against the physical implementation:
 - [ ] Photograph the full main bus wiring.
 - [ ] Photograph the Dell server power-supply connection to `12V_PSU`.
 - [ ] Photograph the LM2596S output wiring to `5V_PSU`.
+- [ ] Confirm the supply voltage used by both J5 TB6600 drivers.
 - [ ] Confirm the exact physical location of `RT1`.
 - [ ] Confirm the exact physical location of `RT2`.
 - [ ] Verify that `CANH` and `CANL` are not swapped in any branch.
