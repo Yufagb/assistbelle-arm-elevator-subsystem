@@ -124,8 +124,8 @@ Legend:
 - [ ] Add final electronics figure.
 - [ ] Add final mechanical figure.
 - [ ] Add validation figures and tables.
-- [ ] Add design-files summary table.
-- [ ] Add BOM summary table.
+- [x] Add design-files summary table: `paper/tables/design_files_summary.md`.
+- [x] Add BOM summary table: `paper/tables/bom_summary.md`.
 - [ ] Add data availability statement.
 - [ ] Add references.
 
