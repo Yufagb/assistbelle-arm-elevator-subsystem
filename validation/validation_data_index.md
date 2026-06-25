@@ -12,9 +12,9 @@ This file summarizes the curated validation evidence currently stored in the rep
 | Joint-motion plots | `validation/joint_motion_tests/plots/` | Uploaded. |
 | Kinematics figures | `validation/kinematics_tests/figures/` | Uploaded. |
 | Perception figures | `validation/perception_tests/figures/` | Uploaded. |
-| Joint-motion Tracker files | `validation/tracker_files/joint_motion/` | Uploaded through Git LFS. |
-| Kinematics Tracker files | `validation/tracker_files/kinematics/` | Uploaded through Git LFS. |
-| Representative validation videos | `validation/media/` | Uploaded through Git LFS. |
+| Joint-motion Tracker projects and linked videos | `validation/tracker_files/joint_motion/` | Uploaded through Git LFS. Each tracked `.trk` has its linked `.mp4` in the same folder. |
+| Kinematics Tracker projects and linked images | `validation/tracker_files/kinematics/` | Uploaded through Git LFS. Each tracked `.trk` has its linked `.jpeg` in the same folder. |
+| Representative validation videos | `validation/media/` | Uploaded through Git LFS for quick reviewer access. |
 
 ## Representative videos uploaded
 
@@ -26,17 +26,26 @@ This file summarizes the curated validation evidence currently stored in the rep
 | Perception | `validation/media/perception/resultado_percepcion_video_prueba_completa.mp4` | Representative perception test. |
 | Teleoperation | `validation/media/teleoperation/Teclado_P2.mp4` | Representative keyboard teleoperation test. |
 
+## Tracker-linked media uploaded
+
+The repository also stores validation media next to the Tracker project files so that reviewers can open each `.trk` directly after cloning with Git LFS enabled.
+
+| Tracker group | Linked media stored next to `.trk` | Purpose |
+|---|---:|---|
+| Joint motion | 15 `.mp4` files | Full Tracker-linked video evidence for J1-J5 step, ramp and trapezoidal motion tests. |
+| Kinematics | 20 `.jpeg` files | Tracker-linked still-image evidence for inverse/direct kinematics measurement cases P1-P5. |
+
 ## Local video evidence not yet committed
 
-The full video set remains available locally after copying from the historical `resultados/` folder, but only a representative subset was committed because the complete set is large.
+The historical `resultados/` folder may still contain additional raw videos and intermediate files. These are kept outside the repository unless they are needed for reproducibility or review.
 
-| Local folder | Approximate size before subset selection | Current decision |
-|---|---:|---|
-| `validation/media/joint_motion/` | 931 MB | Representative subset uploaded; remaining videos stay local or can be linked externally. |
-| `validation/media/kinematics/` | 468 MB | Not uploaded; select later or link externally if needed. |
-| `validation/media/teleoperation/` | 351 MB | Representative `Teclado_P2.mp4` uploaded; remaining videos stay local or can be linked externally. |
-| `validation/media/perception/` | 12 MB | Main perception video uploaded. |
+| Local folder | Current decision |
+|---|---|
+| `validation/media/joint_motion/` | Representative videos uploaded in `validation/media/`; full Tracker-linked set uploaded in `validation/tracker_files/joint_motion/`. |
+| `validation/media/kinematics/` | Tracker-linked `.jpeg` evidence uploaded in `validation/tracker_files/kinematics/`. |
+| `validation/media/teleoperation/` | Representative `Teclado_P2.mp4` uploaded. Remaining videos can stay local unless needed. |
+| `validation/media/perception/` | Main perception video uploaded. |
 
 ## Recommended next step
 
-Use the uploaded subset for the manuscript and HardwareX review package. Keep the complete video set either local or in an external archive if full audiovisual reproducibility is required.
+Use `paper/tables/validation_summary.md` as the manuscript-facing summary of the uploaded validation evidence. Keep any remaining raw video material either local or in an external archive if full audiovisual provenance is required.
