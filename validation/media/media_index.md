@@ -2,13 +2,26 @@
 
 Este archivo registra videos, capturas o enlaces audiovisuales usados como evidencia de validación.
 
-## Evidencias locales identificadas
+## Videos representativos versionados
 
-| ID | Archivo recomendado | Fuente original | Tipo de prueba | Subsistema | Descripción | Estado |
-|---|---|---|---|---|---|---|
-| MED-001 | `teleop_keyboard_test.mp4` | `resultados/Teclado_P1.mp4` | Teleoperación | ROS 2 + CAN | Prueba de movimiento comandado por teclado. | Pendiente de copiar o enlazar. |
-| MED-002 | `j5_ramp_100mm_5reps.mp4` | `resultados/j5_ramp_100.0mm_5reps.mp4` | Movimiento articular | Elevador J5 | Prueba del eje prismático con perfil rampa de 100 mm y 5 repeticiones. | Pendiente de copiar o enlazar. |
-| MED-003 | `j5_trapezoidal_100mm_5reps.mp4` | `resultados/j5_trap_100.0mm_5reps.mp4` | Movimiento articular | Elevador J5 | Prueba del eje prismático con perfil trapezoidal de 100 mm y 5 repeticiones. | Pendiente de copiar o enlazar. |
+| ID | Archivo | Tipo de prueba | Subsistema | Descripción | Estado |
+|---|---|---|---|---|---|
+| MED-001 | `validation/media/joint_motion/j5_ramp_100.0mm_5reps_robot.mp4` | Movimiento articular | Elevador J5 | Perfil rampa de 100 mm con 5 repeticiones, vista del robot. | Subido con Git LFS. |
+| MED-002 | `validation/media/joint_motion/j5_trap_100.0mm_5reps_robot.mp4` | Movimiento articular | Elevador J5 | Perfil trapezoidal de 100 mm con 5 repeticiones, vista del robot. | Subido con Git LFS. |
+| MED-003 | `validation/media/joint_motion/j1_step_30.0deg_5reps_robot.mp4` | Movimiento articular | J1 | Perfil escalón de 30 grados con 5 repeticiones, vista del robot. | Subido con Git LFS. |
+| MED-004 | `validation/media/perception/resultado_percepcion_video_prueba_completa.mp4` | Percepción | Visión | Video de prueba completa de percepción. | Subido con Git LFS. |
+| MED-005 | `validation/media/teleoperation/Teclado_P2.mp4` | Teleoperación | ROS 2 + CAN | Prueba de movimiento comandado por teclado. | Subido con Git LFS. |
+
+## Videos locales no versionados
+
+Los demás videos de `validation/media/` se mantienen como evidencia local no versionada para evitar subir todo el conjunto audiovisual. Pueden subirse en una versión posterior o enlazarse externamente si se requiere reproducibilidad audiovisual completa.
+
+| Grupo local | Estado |
+|---|---|
+| `validation/media/joint_motion/` | Solo se versionó un subconjunto representativo. |
+| `validation/media/kinematics/` | Pendiente de selección o enlace externo. |
+| `validation/media/teleoperation/` | Solo se versionó `Teclado_P2.mp4`. |
+| `validation/media/perception/` | Se versionó el video de percepción principal. |
 
 ## Criterios de selección
 
@@ -23,24 +36,4 @@ Una evidencia audiovisual se considera útil para publicación si permite verifi
 
 ## Recomendación de almacenamiento
 
-Si los videos pesan poco, pueden colocarse directamente en `validation/media/`. Si pesan mucho, deben alojarse externamente y registrarse aquí con un enlace estable.
-
-## Comandos locales sugeridos
-
-```bash
-cd ~/robot-project
-
-mkdir -p validation/media
-
-cp "resultados/Teclado_P1.mp4" "validation/media/teleop_keyboard_test.mp4"
-cp "resultados/j5_ramp_100.0mm_5reps.mp4" "validation/media/j5_ramp_100mm_5reps.mp4"
-cp "resultados/j5_trap_100.0mm_5reps.mp4" "validation/media/j5_trapezoidal_100mm_5reps.mp4"
-```
-
-Antes de subir videos al repositorio, revisar su tamaño:
-
-```bash
-ls -lh validation/media/*.mp4
-```
-
-Si algun video supera un tamaño razonable para GitHub, mantener solo el índice y subir el archivo a un almacenamiento externo.
+Si se requiere conservar el conjunto audiovisual completo, se recomienda alojarlo en almacenamiento externo estable y registrar aquí el enlace. Para el repositorio HardwareX se prioriza un subconjunto representativo con Git LFS.
