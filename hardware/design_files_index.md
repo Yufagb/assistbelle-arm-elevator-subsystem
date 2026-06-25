@@ -38,24 +38,27 @@ Subsystem STEP exports are optional for the current working snapshot but recomme
 |---|---|---|---|
 | `FAB_STR_001` | [`drawings/FAB_STR_001_Base_Plate_356x356x15_MDF_v60.pdf`](drawings/FAB_STR_001_Base_Plate_356x356x15_MDF_v60.pdf) | Uploaded | MDF base plate drawing with dimensions, material, units, tolerance and hole notes. |
 | `FAB_STR_002` | [`drawings/FAB_STR_002_Top_Plate_420x400x3_StainlessSteel_v60.pdf`](drawings/FAB_STR_002_Top_Plate_420x400x3_StainlessSteel_v60.pdf) | Uploaded | Stainless steel top plate drawing with dimensions, material, units, tolerance and hole notes. |
-| `FAB_GUI_001` | `drawings/FAB_GUI_001_Gantry_Plate_127x88x3_StainlessSteel_v60.pdf` | Pending | Stainless steel gantry plate drawing with dimensions. |
+| `FAB_GUI_001` | [`drawings/FAB_GUI_001_Gantry_Plate_127x88x3_StainlessSteel_v60.pdf`](drawings/FAB_GUI_001_Gantry_Plate_127x88x3_StainlessSteel_v60.pdf) | Uploaded | Stainless steel gantry plate drawing with dimensions, material, units, tolerance and hole notes. |
 | `FAB_STR_002` | `drawings/FAB_STR_002_Top_Plate_420x400x3_StainlessSteel_v60.dxf` | Recommended | DXF for laser/waterjet cutting if available. |
 | `FAB_GUI_001` | `drawings/FAB_GUI_001_Gantry_Plate_127x88x3_StainlessSteel_v60.dxf` | Recommended | DXF for laser/waterjet cutting if available. |
 
-## Pending photos
+## Deferred mechanical photos
+
+Physical prototype photos are deferred because the robot is not currently available for imaging.
 
 | Target file | Status | Notes |
 |---|---|---|
-| `photos/IMG_Elevator_Assembled_Front_v60.jpg` | Pending | Overall front view. |
-| `photos/IMG_Elevator_Assembled_Side_v60.jpg` | Pending | Overall side view. |
-| `photos/IMG_Elevator_Carriage_VWheels_v60.jpg` | Pending | V-wheel guide evidence. |
-| `photos/IMG_Elevator_TR8_NEMA23_Drive_v60.jpg` | Pending | Lead screw, coupler and NEMA23 evidence. |
-| `photos/IMG_Elevator_Top_Plate_v60.jpg` | Pending | Top plate evidence. |
-| `photos/IMG_Elevator_Base_Plate_v60.jpg` | Pending | Base plate and structural bracket evidence. |
+| `photos/IMG_Elevator_Assembled_Front_v60.jpg` | Deferred / pending physical access | Overall front view. |
+| `photos/IMG_Elevator_Assembled_Side_v60.jpg` | Deferred / pending physical access | Overall side view. |
+| `photos/IMG_Elevator_Carriage_VWheels_v60.jpg` | Deferred / pending physical access | V-wheel guide evidence. |
+| `photos/IMG_Elevator_TR8_NEMA23_Drive_v60.jpg` | Deferred / pending physical access | Lead screw, coupler and NEMA23 evidence. |
+| `photos/IMG_Elevator_Top_Plate_v60.jpg` | Deferred / pending physical access | Top plate evidence. |
+| `photos/IMG_Elevator_Base_Plate_v60.jpg` | Deferred / pending physical access | Base plate and structural bracket evidence. |
 
 ## Notes for HardwareX release
 
 - The v60 files are a current working snapshot, not a final frozen release.
 - Keep the complete `.f3z` and complete `.step` even if subsystem exports are later added.
 - Do not upload individual STEP/STL files for every commercial screw, nut, bearing, motor or module unless required for reproduction.
+- Physical prototype photos should be added once the robot is available again.
 - Before final publication, make sure the final frozen CAD version matches the BOM snapshot or clearly document any version difference.
