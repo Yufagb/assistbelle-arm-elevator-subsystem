@@ -132,7 +132,7 @@ Legend:
 ## 11. Final cleanup
 
 - [x] Replace remaining obvious publication placeholders: local grep validation found no obvious metadata/publication placeholders outside `docs/repo_cleanup_audit.md`.
-- [ ] Check all links in root README and docs README.
+- [~] Check all links in root README and docs README: main README files were refreshed for v60/BOM status; full automated Markdown link check still pending.
 - [ ] Confirm public access to repository.
 - [ ] Confirm license policy is reflected in README, LICENSE and docs/license_overview.md.
 - [ ] Run a clean-clone reproducibility test.
