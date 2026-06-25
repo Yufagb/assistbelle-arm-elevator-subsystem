@@ -119,14 +119,14 @@ Legend:
 
 ## 10. Manuscript material
 
-- [ ] Create manuscript draft or outline.
+- [x] Create manuscript draft or outline: `paper/manuscript_outline.md`.
 - [ ] Add final architecture figure.
 - [ ] Add final electronics figure.
 - [ ] Add final mechanical figure.
 - [ ] Add validation figures and tables.
 - [x] Add design-files summary table: `paper/tables/design_files_summary.md`.
 - [x] Add BOM summary table: `paper/tables/bom_summary.md`.
-- [ ] Add data availability statement.
+- [x] Add data availability statement: `paper/data_availability_statement.md`.
 - [ ] Add references.
 
 ## 11. Final cleanup
