@@ -49,11 +49,11 @@ Legend:
 - [x] Raspberry Pi + MCP2515 documented.
 - [x] Main CAN/power bus documented in text.
 - [x] Schematics folder and index created.
+- [~] Connector table updated with confirmed design intent; exact pin order, wire colors and connector models remain pending physical inspection.
+- [~] Power summary updated with emergency-stop behavior and J5 dual-TB6600 notes; TB6600 supply voltage remains pending physical inspection.
 - [ ] Confirm final schematic file names.
-- [ ] Add or export schematic PDFs/PNGs if only editable files exist.
 - [ ] Add final CAN diagram.
 - [ ] Add final power-distribution diagram.
-- [ ] Add final connector table.
 - [ ] Add electronics photos.
 - [ ] Confirm electronics design files are covered by CERN-OHL-S v2.0.
 
@@ -64,8 +64,9 @@ Legend:
 - [x] ESP-IDF build guide added.
 - [x] CAN IDs documented.
 - [x] J5/TB6600 firmware included.
+- [~] CAN payloads reviewed against ROS 2. `C5` is compatible; `B5` needs final decision because ROS expects position+velocity and current firmware returns position+reserved/status bytes.
 - [ ] Document final safety limits in firmware.
-- [ ] Confirm CAN payloads match ROS 2 implementation.
+- [ ] Decide final `B5` format and update firmware or ROS 2 accordingly.
 - [ ] Add SPDX comments to source files when editing them.
 
 ## 6. ROS 2 software
@@ -74,6 +75,7 @@ Legend:
 - [x] `can_comm_pkg` included.
 - [x] `can_node` validated with virtual CAN.
 - [x] Main entry points documented.
+- [~] J5 ROS/CAN compatibility documented; `C5` uses mm as `float32` little-endian.
 - [ ] Validate all entry points one by one from a clean clone.
 - [ ] Clarify whether product-identification scripts are ROS nodes or standalone helpers.
 - [ ] Verify Python dependencies and system dependencies.
