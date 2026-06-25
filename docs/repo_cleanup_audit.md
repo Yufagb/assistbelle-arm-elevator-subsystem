@@ -12,12 +12,12 @@ This audit covers checks that can be performed from the GitHub repository view p
 
 | Check | Result | Action taken |
 |---|---|---|
-| ROS placeholder email `tu_email@ejemplo.com` | Found in `can_comm_pkg` metadata and an obsolete backup file. | Replaced in current `setup.py` and `package.xml`; removed `setup.py.bak`. |
-| ROS placeholder email `rosario@todo.todo` | Found in `video_streamer` metadata. | Replaced with project maintainer metadata. |
-| ROS package `TODO: Package description` | Found in `video_streamer` and `cpp_video_streamer`. | Replaced with project-specific descriptions. |
-| ROS package `TODO: License declaration` | Found in `video_streamer`, `cpp_robot_control` and `cpp_video_streamer`. | Replaced with `Apache-2.0`. |
+| ROS placeholder email for `can_comm_pkg` | Found in package metadata and an obsolete backup file. | Replaced in current `setup.py` and `package.xml`; removed `setup.py.bak`. |
+| ROS placeholder email for `video_streamer` | Found in package metadata. | Replaced with project maintainer metadata. |
+| ROS placeholder package description | Found in `video_streamer` and `cpp_video_streamer`. | Replaced with project-specific descriptions. |
+| ROS placeholder license declaration | Found in `video_streamer`, `cpp_robot_control` and `cpp_video_streamer`. | Replaced with `Apache-2.0`. |
 | Local backup files | `setup.py.bak` was tracked. | Removed tracked backup and added `*.bak`, `*.tmp`, `*.orig` to `.gitignore`. |
-| Generated folders search | No obvious tracked `build/`, `install/`, `log/`, `.vscode/` or `.idea/` files found by repository text search. | Local `git ls-files` check still recommended. |
+| Generated folders search | No obvious tracked `build/`, `install/`, `log/`, `.vscode` or `.idea` files found by repository text search. | Local `git ls-files` check completed by the project owner and returned OK. |
 
 ## Files cleaned
 
@@ -32,7 +32,19 @@ This audit covers checks that can be performed from the GitHub repository view p
 | `ros2_ws/src/cpp_video_streamer/package.xml` | Description, maintainer, email and license metadata corrected. |
 | `.gitignore` | Added local backup-file patterns. |
 
-## Local validation commands
+## Local validation results
+
+The project owner ran the following local checks after pulling the latest `main` branch:
+
+```text
+git status -> nothing to commit, working tree clean
+no tracked generated/local-state files found
+no tracked backup/temp files found
+```
+
+The placeholder grep returned matches only inside this audit document, because this file documents the cleanup history and the validation command itself. The command below excludes this audit file to avoid that intentional false positive.
+
+## Local validation commands for future runs
 
 Run these commands from the repository root after pulling the latest `main` branch:
 
@@ -53,10 +65,10 @@ Check for tracked backup or temporary files:
 git ls-files | grep -E '\.(bak|tmp|orig)$' || echo "OK: no tracked backup/temp files found"
 ```
 
-Check for remaining obvious placeholder strings:
+Check for remaining obvious publication-placeholder strings while excluding this audit file:
 
 ```bash
-git grep -n -E 'tu_email@ejemplo\.com|rosario@todo\.todo|TODO: Package description|TODO: License declaration|CHANGE_ME|ADD_ME|YOUR_EMAIL|example\.com|ejemplo\.com' || echo "OK: no obvious publication placeholders found"
+git grep -n -E 'tu_email@ejemplo\.com|rosario@todo\.todo|TODO: Package description|TODO: License declaration|CHANGE_ME|ADD_ME|YOUR_EMAIL|example\.com|ejemplo\.com' -- . ':!docs/repo_cleanup_audit.md' || echo "OK: no obvious publication placeholders found"
 ```
 
 Check for broader TODO/FIXME markers. Not all results are errors; some may be intentional engineering notes:
@@ -85,7 +97,7 @@ filter: lfs
 
 ## Remaining cleanup work
 
-- Run the local commands above from a fresh clone or current working copy.
+- Run the placeholder check with the audit-file exclusion command above.
 - Review broader `TODO` results manually; many may be valid engineering TODOs rather than publication placeholders.
 - Check Markdown links before final HardwareX submission.
 - Run a clean-clone ROS 2 build test for `can_comm_pkg` and other active packages.
