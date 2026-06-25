@@ -52,8 +52,8 @@ Legend:
 - [~] Connector table updated with confirmed design intent; exact pin order, wire colors and connector models remain pending physical inspection.
 - [~] Power summary updated with emergency-stop behavior and J5 dual-TB6600 notes; TB6600 supply voltage remains pending physical inspection.
 - [ ] Confirm final schematic file names.
-- [ ] Add final CAN diagram.
-- [ ] Add final power-distribution diagram.
+- [~] Add final CAN diagram: Mermaid draft created in `paper/figures/electronics_can_architecture_mermaid.md`; final vector export pending.
+- [~] Add final power-distribution diagram: Mermaid draft created in `paper/figures/power_distribution_mermaid.md`; final vector export pending.
 - [ ] Add electronics photos.
 - [ ] Confirm electronics design files are covered by CERN-OHL-S v2.0.
 
@@ -112,7 +112,7 @@ Legend:
 - [x] Initial J5 motion summary created.
 - [ ] Curate videos into `validation/media/` or provide stable external links.
 - [ ] Curate final CSV files.
-- [ ] Generate final figures.
+- [ ] Generate final validation figures from curated CSVs.
 - [ ] Document physical CAN validation.
 - [ ] Document pick-and-place validation.
 - [ ] Document perception validation.
@@ -120,9 +120,9 @@ Legend:
 ## 10. Manuscript material
 
 - [x] Create manuscript draft or outline: `paper/manuscript_outline.md`.
-- [ ] Add final architecture figure.
-- [ ] Add final electronics figure.
-- [ ] Add final mechanical figure.
+- [~] Add final architecture figure: Mermaid draft created in `paper/figures/system_architecture_mermaid.md`; final vector export pending.
+- [~] Add final electronics figure: Mermaid draft created in `paper/figures/electronics_can_architecture_mermaid.md`; final vector export pending.
+- [~] Add final mechanical figure: figure plan created in `paper/figures/mechanical_figure_plan.md`; CAD render/photo export pending.
 - [ ] Add validation figures and tables.
 - [x] Add design-files summary table: `paper/tables/design_files_summary.md`.
 - [x] Add BOM summary table: `paper/tables/bom_summary.md`.
