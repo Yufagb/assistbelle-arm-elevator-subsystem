@@ -1,0 +1,56 @@
+name: ROS 2 build (can_comm_pkg)
+
+# Mirrors the clean-clone flow documented in README.md "Quick start" and
+# docs/repository_audit.md closure criteria: firmware/ROS 2 must build from
+# a clean clone. Runs on every push/PR that touches the ROS 2 workspace.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "ros2_ws/**"
+      - "requirements.txt"
+      - ".github/workflows/ros2-build.yml"
+  pull_request:
+    paths:
+      - "ros2_ws/**"
+      - "requirements.txt"
+      - ".github/workflows/ros2-build.yml"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: ros:jazzy-ros-base
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Checkout (without LFS payload)
+        uses: actions/checkout@v4
+
+      - name: Install colcon
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends python3-colcon-common-extensions python3-pip
+          rm -rf /var/lib/apt/lists/*
+
+      - name: Install Python dependencies
+        run: pip install --break-system-packages -r requirements.txt
+
+      - name: Fast syntax check (can_comm_pkg)
+        run: python3 -m py_compile $(find ros2_ws/src/can_comm_pkg -name '*.py')
+
+      - name: colcon build
+        working-directory: ros2_ws
+        run: |
+          source /opt/ros/jazzy/setup.bash
+          colcon build --packages-select can_comm_pkg
+
+      - name: colcon test
+        working-directory: ros2_ws
+        run: |
+          source /opt/ros/jazzy/setup.bash
+          source install/setup.bash
+          colcon test --packages-select can_comm_pkg
+          colcon test-result --verbose

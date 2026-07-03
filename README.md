@@ -2,6 +2,8 @@
 
 # Assistbelle robotic arm and elevator subsystem
 
+[![ROS 2 build](https://github.com/Yufagb/assistbelle-arm-elevator-subsystem/actions/workflows/ros2-build.yml/badge.svg)](https://github.com/Yufagb/assistbelle-arm-elevator-subsystem/actions/workflows/ros2-build.yml)
+
 Open-source HardwareX publication package for the **robotic arm and vertical elevator subsystem** of Assistbelle, intended for controlled laboratory experiments on the manipulation and transport of medical supplies.
 
 This repository contains the hardware documentation, firmware, ROS 2 software, electronics documentation, validation material and publication support files needed to reproduce and evaluate the arm/elevator subsystem.
