@@ -13,7 +13,7 @@ setup(
         ('share/' + package_name + '/launch', ['launch/rviz_sim.launch.py']),
         ('share/' + package_name + '/rviz', ['rviz/config.rviz']),
     ],
-    install_requires=['setuptools','rclpy','std_msgs','sensor_msgs','numpy'],
+    install_requires=['setuptools','rclpy','std_msgs','sensor_msgs','numpy','matplotlib'],
     zip_safe=True,
     maintainer='Yuri Fabian Vilela Obando',
     maintainer_email='yuri.vilela@utec.edu.pe',

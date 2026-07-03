@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from can_comm_pkg.driver import CANDriver
+from can_comm_pkg.core.driver import CANDriver
 from time import sleep
 
 def main():

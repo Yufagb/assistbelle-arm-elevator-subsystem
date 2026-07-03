@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-from can_comm_pkg.driver import CANDriver
-from can_comm_pkg.message import CANMessage
+from can_comm_pkg.core.driver import CANDriver
+from can_comm_pkg.core.message import CANMessage
 
 def main():
     # Inicializa el driver sobre el bus físico can0
