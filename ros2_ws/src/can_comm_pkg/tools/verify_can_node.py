@@ -9,8 +9,8 @@ mock_socket.AF_CAN = 0
 mock_socket.SOCK_RAW = 0
 mock_socket.CAN_RAW = 0
 
-# Add package to path
-sys.path.append('/home/rosario/robot-project/ros2_ws/src/can_comm_pkg')
+# Add package to path (run directly from a source checkout, without colcon install)
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import rclpy
 from rclpy.node import Node
@@ -18,7 +18,7 @@ from sensor_msgs.msg import JointState
 
 # Import the node class
 try:
-    from can_comm_pkg.can_node import CANNode
+    from can_comm_pkg.core.can_node import CANNode
 except ImportError as e:
     print(f"Import Error: {e}")
     sys.exit(1)
