@@ -8,6 +8,19 @@ Open-source HardwareX publication package for the **robotic arm and vertical ele
 
 This repository contains the hardware documentation, firmware, ROS 2 software, electronics documentation, validation material and publication support files needed to reproduce and evaluate the arm/elevator subsystem.
 
+## Demo
+
+<p align="center">
+  <img src="validation/media/readme/elevator_side_view.gif" alt="Robotic arm on the vertical elevator running a 100 mm trapezoidal motion profile" width="480"><br>
+  <em>Vertical elevator (J5) running a 100 mm trapezoidal profile with the arm mounted (4× speed).</em>
+</p>
+
+| Joint 1 step test (top view, 2× speed) | Product identification (perception) |
+|:---:|:---:|
+| <img src="validation/media/readme/joint1_top_view.gif" alt="Joint 1 executing a 30 degree step, top view" width="360"> | <img src="validation/perception_tests/figures/resultado_percepcion2.png" alt="Barcode-based product identification marked as identified" width="420"> |
+
+These clips are cut from the laboratory validation recordings. Full-length videos are in [`validation/media/`](validation/media/) and the test data in [`validation/`](validation/).
+
 ## Authors
 
 - Yuri Fabian Vilela Obando
